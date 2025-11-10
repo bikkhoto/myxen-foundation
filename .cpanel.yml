@@ -42,10 +42,14 @@ deployment:
     # Deploy Next.js dApp to subdirectory (e.g., /dapp)
     - echo "Deploying Next.js dApp..."
     - /bin/mkdir -p $DEPLOYPATH/dapp
-    - cd $HOME/repository/myxenpay-dapp
-    - npm install --production
-    - npm run build
-    - /bin/cp -R out/* $DEPLOYPATH/dapp/
+    - if command -v npm >/dev/null 2>&1; then \
+        echo "Node detected. Building root Next.js app..." && \
+        npm ci && \
+        npm run build && \
+        /bin/cp -R out/* $DEPLOYPATH/dapp/ ; \
+      else \
+        echo "npm not found on server. Skipping DApp build. Use GitHub Actions FTP workflow to deploy /dapp." ; \
+      fi
     
     # Set correct permissions
     - chmod -R 755 $DEPLOYPATH

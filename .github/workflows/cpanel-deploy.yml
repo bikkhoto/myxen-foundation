@@ -1,0 +1,56 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to cPanel via FTP
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: myxenpay-dapp/package-lock.json
+      
+      - name: Install Next.js dependencies
+        working-directory: ./myxenpay-dapp
+        run: npm ci
+      
+      - name: Build Next.js dApp
+        working-directory: ./myxenpay-dapp
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Prepare deployment files
+        run: |
+          mkdir -p deploy/dapp
+          # Copy PHP files
+          cp -r "myxen foundation"/* deploy/
+          # Copy Next.js build
+          cp -r myxenpay-dapp/out/* deploy/dapp/
+      
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.CPANEL_FTP_SERVER }}
+          username: ${{ secrets.CPANEL_FTP_USER }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          local-dir: ./deploy/
+          server-dir: ./public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env
+            **/vendor/**
+            **/.next/**

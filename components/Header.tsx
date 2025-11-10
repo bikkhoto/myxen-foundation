@@ -8,14 +8,24 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg dark:border-gray-800 dark:bg-black/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
+          {/* Light mode logo */}
           <Image
-            src="/logo.png"
+            src="/myxenpay-logo-dark.png"
             alt="MyXen Foundation"
-            width={40}
+            width={120}
             height={40}
-            className="rounded-full"
+            className="hidden dark:block"
+            priority
           />
-          <span className="text-xl font-bold">MyXen Foundation</span>
+          {/* Dark mode logo */}
+          <Image
+            src="/myxenpay-logo-light.png"
+            alt="MyXen Foundation"
+            width={120}
+            height={40}
+            className="block dark:hidden"
+            priority
+          />
         </div>
         
         <nav className="hidden items-center gap-6 md:flex">

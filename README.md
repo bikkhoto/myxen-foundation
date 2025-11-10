@@ -4,6 +4,13 @@ The Official GitHub repository for the MyXen Ecosystem Built on Solana. The firs
 
 **Live Website**: https://myxenpay.finance
 
+## ⚠️ Deployment Status
+
+**Action Required**: Deployment workflows have been temporarily disabled to fix configuration issues.
+
+📖 **See**: [`DEPLOYMENT_FIX.md`](DEPLOYMENT_FIX.md) - Complete explanation of deployment issues and solutions
+🚀 **Quick Start**: [`CHOOSE_DEPLOYMENT.md`](CHOOSE_DEPLOYMENT.md) - Choose your deployment method
+
 ## 🏗️ Repository Structure
 
 This is a **hybrid monorepo** containing:

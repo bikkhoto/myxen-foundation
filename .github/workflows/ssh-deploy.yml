@@ -1,0 +1,94 @@
+name: Deploy via SSH (rsync)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+      DEPLOY_TARGET: ${{ secrets.SSH_TARGET_PATH }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build & Export
+        run: |
+          npm run build
+          npx next export
+
+      - name: Prepare SSH
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          if [ -n "${SSH_PASSPHRASE:-}" ]; then
+            printf '%s\n' '#!/usr/bin/env bash' 'echo "$SSH_PASSPHRASE"' > ~/.ssh/askpass.sh
+            chmod +x ~/.ssh/askpass.sh
+            export SSH_ASKPASS=~/.ssh/askpass.sh
+            export DISPLAY=:0
+            setsid -w ssh-add ~/.ssh/id_rsa < /dev/null
+          else
+            ssh-add ~/.ssh/id_rsa
+          fi
+          PORT="${SSH_PORT:-22}"
+          ssh-keyscan -p "$PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload DApp
+        shell: bash
+        run: |
+          if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip DApp'; exit 0; fi
+          PORT="${SSH_PORT:-22}"; SSH_OPTS="-p $PORT -o StrictHostKeyChecking=no"
+          if rsync -az --delete -e "ssh $SSH_OPTS" ./out/ "${SSH_USER}@${SSH_HOST}:${DEPLOY_TARGET}/dapp/"; then
+            echo 'DApp uploaded via rsync'
+          else
+            echo 'rsync failed; using scp fallback'
+            ssh $SSH_OPTS "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_TARGET}/dapp'"
+            scp -r -P "$PORT" -o StrictHostKeyChecking=no ./out/* "${SSH_USER}@${SSH_HOST}:${DEPLOY_TARGET}/dapp/"
+          fi
+
+      - name: Upload PHP site
+        shell: bash
+        run: |
+          if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip PHP site'; exit 0; fi
+          PORT="${SSH_PORT:-22}"; SSH_OPTS="-p $PORT -o StrictHostKeyChecking=no"
+          if rsync -az --delete --exclude '.git/' --exclude '.github/' --exclude 'node_modules/' -e "ssh $SSH_OPTS" "./myxen foundation/" "${SSH_USER}@${SSH_HOST}:${DEPLOY_TARGET}/"; then
+            echo 'PHP site uploaded via rsync'
+          else
+            echo 'rsync failed; using tar over SSH fallback'
+            tar -C "./myxen foundation" -czf - . | ssh $SSH_OPTS "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_TARGET}' && tar -xzf - -C '${DEPLOY_TARGET}'"
+          fi
+
+      - name: Remote backup snapshot
+        shell: bash
+        run: |
+          if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip backup'; exit 0; fi
+          PORT="${SSH_PORT:-22}"; TS=$(date +%F_%H%M%S)
+          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_TARGET}/backups' && cd '${DEPLOY_TARGET}' && tar -czf 'backups/site_${TS}.tar.gz' . --exclude 'backups' || true"
+
+      - name: Remote post-deploy
+        shell: bash
+        run: |
+          if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip post-deploy'; exit 0; fi
+          PORT="${SSH_PORT:-22}"
+          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "cd '${DEPLOY_TARGET}' || exit 0; if command -v composer >/dev/null 2>&1; then composer install --no-dev --prefer-dist --no-interaction || true; fi; find . -type d -exec chmod 755 {} +; find . -type f -exec chmod 644 {} +"

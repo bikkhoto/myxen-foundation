@@ -1,0 +1,6 @@
+[2025-10-15 19:21:14] [103.25.120.234] [INVOICE_GENERATED] {"merchant_email":"shanto.mohona@gmail.com","invoice_id":"#INV-4596","amount":".02"}
+[2025-10-15 19:21:14] [103.25.120.234] [INVOICE_ERROR] {"error":"PHPMailer not installed. Run: composer install","client_ip":"103.25.120.234"}
+[2025-10-15 19:21:36] [103.25.120.234] [INVOICE_GENERATED] {"merchant_email":"shanto.mohona@gmail.com","invoice_id":"#INV-4596","amount":".02"}
+[2025-10-15 19:21:36] [103.25.120.234] [INVOICE_ERROR] {"error":"PHPMailer not installed. Run: composer install","client_ip":"103.25.120.234"}
+[2025-10-15 19:39:43] [103.14.72.78] [INVOICE_GENERATED] {"merchant_email":"shanto.mohona@gmail.com","invoice_id":"#INV-1711","amount":"1"}
+[2025-10-15 19:39:43] [103.14.72.78] [INVOICE_ERROR] {"error":"PHPMailer not installed. Run: composer install","client_ip":"103.14.72.78"}

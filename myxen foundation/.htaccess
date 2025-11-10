@@ -1,0 +1,66 @@
+# Allow public access to JSON metadata files
+<FilesMatch "\.json$">
+    Require all granted
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "application/json"
+</FilesMatch>
+
+# Fix for LiteSpeed 403 on JSON
+AddType application/json .json
+<Files ".env">
+    Require all denied
+</Files>
+
+<Files "error.log">
+    Require all denied
+</Files>
+
+<Files "get_csrf.php">
+    # Allow access (needed for merchant.html)
+</Files>
+
+<Files "send_invoice.php">
+    # Allow access (needed for API)
+</Files>
+
+# Force HTTPS
+
+RewriteEngine On
+# Force HTTPS (optional but recommended)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove .html extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Remove .php extension
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# Redirect .html URLs to clean versions
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# Redirect .php URLs to clean versions
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+
+# Cache control
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

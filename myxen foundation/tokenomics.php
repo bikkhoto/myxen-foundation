@@ -1,0 +1,1254 @@
+<?php header("Content-Type: text/html; charset=utf-8"); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVWK4RJ2QN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KVWK4RJ2QN');
+  </script>
+  <meta name="google-site-verification" content="your-verification-code" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>$MYXEN Tokenomics - MyxenPay</title>
+  <meta name="description" content="Complete $MYXEN token economics: fair launch, progressive burns, staking rewards, and sustainable token utility.">
+  <meta property="og:title" content="$MYXEN Tokenomics - MyxenPay">
+  <meta property="og:description" content="Fair launch on Pump.fun. Progressive burns based on market cap. Real utility for global payments.">
+  <meta property="og:image" content="https://myxenpay.finance/og/og-tokenomics.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <style>
+    /* Inherit CSS variables from index.php */
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --section-spacing: clamp(3rem, 8vw, 6rem);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --glass-bg: rgba(0, 0, 0, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Tokenomics-specific styles */
+    .tokenomics-hero {
+      padding: 8rem 1rem 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tokenomics-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+      background-size: cover;
+    }
+
+    .tokenomics-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .tokenomics-hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .token-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .token-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .token-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .token-card .value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 1rem 0;
+    }
+
+    .distribution-chart {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .distribution-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .distribution-item:last-child {
+      border-bottom: none;
+    }
+
+    .distribution-bar {
+      flex-grow: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      margin: 0 1rem;
+      overflow: hidden;
+    }
+
+    .distribution-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s ease-in-out;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .burn-mechanism {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .burn-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .burn-subtitle {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .burn-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .burn-step {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .step-number {
+      background: white;
+      color: #FF6B6B;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .step-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .roadmap-phase {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .roadmap-phase::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .phase-title {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .phase-items {
+      list-style: none;
+    }
+
+    .phase-items li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .phase-items li:last-child {
+      border-bottom: none;
+    }
+
+    .phase-items li::before {
+      content: '✓';
+      color: var(--secondary);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    .contract-address {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .address-display {
+      font-family: 'Courier New', monospace;
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      word-break: break-all;
+      border: 1px solid var(--border);
+    }
+
+    .utility-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .utility-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .utility-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .utility-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* Inherit all other styles from index.php */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .section {
+      padding: var(--section-spacing) 1rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.25rem;
+      opacity: 0.7;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    /* Header and Footer Styles */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      height: 32px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .desktop-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .desktop-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      opacity: 0.8;
+    }
+
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      color: var(--primary);
+      opacity: 1;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .theme-btn, .connect-btn {
+      background: none;
+      border: 1px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-btn:hover, .connect-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .connect-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: auto;
+      padding: 0 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .connect-btn.connected {
+      background: var(--secondary);
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      z-index: 1001;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .mobile-nav-toggle span::before,
+    .mobile-nav-toggle span::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-toggle span::before {
+      top: -6px;
+    }
+
+    .mobile-nav-toggle span::after {
+      top: 6px;
+    }
+
+    .mobile-nav-toggle.active span {
+      background: transparent;
+    }
+
+    .mobile-nav-toggle.active span::before {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .mobile-nav-toggle.active span::after {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      padding: 5rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-nav.active {
+      transform: translateX(0);
+    }
+
+    .mobile-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.3s ease;
+      opacity: 0.8;
+    }
+
+    .mobile-nav a:hover,
+    .mobile-nav a.active {
+      color: var(--primary);
+      opacity: 1;
+    }
+
+    footer {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 4rem 1rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    @media (min-width: 768px) {
+      .header-container {
+        padding: 1rem 2rem;
+      }
+      
+      .logo {
+        height: 40px;
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .mobile-nav-toggle {
+        display: flex;
+      }
+      
+      .desktop-nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.php">
+        <img id="theme-logo" src="myxenpay-logo-light.png" alt="MyxenPay" class="logo">
+      </a>
+
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+        <span></span>
+      </button>
+
+      <nav class="desktop-nav">
+        <a href="tokenomics.php" class="active">Tokenomics</a>
+        <a href="whitepaper.php">Whitepaper</a>
+        <a href="student-rewards.php">Student Rewards</a>
+        <a href="developers.php">Developers</a>
+        <a href="merchants.php">For Businesses</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-btn">☀️</button>
+        <button id="connect-btn" class="connect-btn">Connect Wallet</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="tokenomics.php" class="active">Tokenomics</a>
+    <a href="whitepaper.php">Whitepaper</a>
+    <a href="student-rewards.php">Student Rewards</a>
+    <a href="developers.php">Developers</a>
+    <a href="merchants.php">For Businesses</a>
+  </nav>
+
+  <!-- Tokenomics Hero -->
+  <section class="tokenomics-hero">
+    <div class="container">
+      <h1>$MYXEN Tokenomics</h1>
+      <p>Fair launch, sustainable economics with progressive burns powering the future of global crypto payments</p>
+    </div>
+  </section>
+
+  <!-- Token Metrics -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Token Metrics</h2>
+        <p class="section-subtitle">Transparent token economics with progressive burn mechanism</p>
+      </div>
+
+      <div class="token-grid">
+        <div class="token-card">
+          <h3>Initial Supply</h3>
+          <div class="value">1B $MYXEN</div>
+          <p>Total supply at launch before progressive burns</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Final Supply</h3>
+          <div class="value">700M $MYXEN</div>
+          <p>Maximum supply after all progressive burns complete</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Transaction Tax</h3>
+          <div class="value">0%</div>
+          <p>No buy/sell tax for seamless payments</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Token Distribution -->
+  <section class="section" style="background: var(--glass-bg);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Token Distribution</h2>
+        <p class="section-subtitle">Fair allocation for sustainable growth with progressive burn mechanism</p>
+      </div>
+
+      <div class="distribution-chart">
+        <div class="distribution-item">
+          <span>Liquidity Pool</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 50%; background: var(--primary);"></div>
+          </div>
+          <span><strong>50%</strong> - 500M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>Team & Development</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 5%; background: var(--secondary);"></div>
+          </div>
+          <span><strong>5%</strong> - 50M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>Marketing & Community Rewards</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 15%; background: var(--accent);"></div>
+          </div>
+          <span><strong>15%</strong> - 150M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>Buyback & Burn</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 30%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>30%</strong> - 300M $MYXEN</span>
+        </div>
+      </div>
+
+      <div class="chart-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--primary);"></div>
+          <span>Liquidity Pool (50%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--secondary);"></div>
+          <span>Team & Development (5%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--accent);"></div>
+          <span>Marketing & Community (15%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #FF6B6B;"></div>
+          <span>Buyback & Burn (30%)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progressive Burn Mechanism -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Progressive Burn Mechanism</h2>
+        <p class="section-subtitle">Automatic token burns based on market cap milestones</p>
+      </div>
+
+      <div class="token-grid">
+        <div class="token-card">
+          <h3>Burn Rate</h3>
+          <div class="value">1% per $1M</div>
+          <p>1% of total supply burns for every $1M market cap increase</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Target Burn</h3>
+          <div class="value">30% at $30M</div>
+          <p>Full 300M $MYXEN burn when $30M market cap is sustained for 24 hours</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Max Supply After Burn</h3>
+          <div class="value">700M $MYXEN</div>
+          <p>Total supply reduces from 1B to 700M after complete burn</p>
+        </div>
+      </div>
+
+      <!-- Burn Progress Chart -->
+      <div class="distribution-chart" style="max-width: 800px;">
+        <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Progressive Burn Schedule</h3>
+        
+        <div class="distribution-item">
+          <span>$1M Market Cap</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 3.33%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>1%</strong> - 10M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>$5M Market Cap</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 16.67%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>5%</strong> - 50M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>$10M Market Cap</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 33.33%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>10%</strong> - 100M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>$20M Market Cap</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 66.67%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>20%</strong> - 200M $MYXEN</span>
+        </div>
+
+        <div class="distribution-item">
+          <span>$30M Market Cap (24h)</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width: 100%; background: #FF6B6B;"></div>
+          </div>
+          <span><strong>30%</strong> - 300M $MYXEN</span>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <p style="opacity: 0.8; font-style: italic;">
+          * Burns occur progressively as market cap milestones are reached and sustained
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Burn Mechanics Explanation -->
+  <section class="section" style="background: var(--glass-bg);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Burn Mechanics</h2>
+        <p class="section-subtitle">Progressive token burns driven by market cap growth</p>
+      </div>
+
+      <div class="token-grid">
+        <div class="token-card">
+          <h3>Initial Allocation</h3>
+          <div class="value">300M $MYXEN</div>
+          <p>Dedicated to progressive buyback and burn</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Burn Trigger</h3>
+          <div class="value">Market Cap</div>
+          <p>Burns activate at specific market cap milestones</p>
+        </div>
+
+        <div class="token-card">
+          <h3>Final Supply</h3>
+          <div class="value">700M $MYXEN</div>
+          <p>Maximum supply after all progressive burns</p>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; margin-top: 2rem;">
+        <h3 style="color: var(--primary); margin-bottom: 1rem;">How Progressive Burns Work</h3>
+        <div style="display: grid; gap: 1rem;">
+          <div style="display: flex; align-items: start; gap: 1rem;">
+            <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0;">1</div>
+            <div>
+              <strong>Market Cap Growth:</strong> As $MYXEN market cap increases, automatic burns trigger
+            </div>
+          </div>
+          <div style="display: flex; align-items: start; gap: 1rem;">
+            <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0;">2</div>
+            <div>
+              <strong>1% per $1M:</strong> Every $1 million in market cap growth burns 1% of total supply (10M $MYXEN)
+            </div>
+          </div>
+          <div style="display: flex; align-items: start; gap: 1rem;">
+            <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0;">3</div>
+            <div>
+              <strong>24-Hour Sustenance:</strong> $30M market cap must be held for 24 hours to trigger final 30% burn
+            </div>
+          </div>
+          <div style="display: flex; align-items: start; gap: 1rem;">
+            <div style="background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0;">4</div>
+            <div>
+              <strong>Deflationary Pressure:</strong> Progressive burns create constant buy pressure and reduce circulating supply
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Token Utility -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Token Utility</h2>
+        <p class="section-subtitle">Real-world use cases driving $MYXEN demand</p>
+      </div>
+
+      <div class="utility-features">
+        <div class="utility-card">
+          <div class="utility-icon">💳</div>
+          <h3>Payment Fees</h3>
+          <p>Pay transaction fees with $MYXEN for discounted rates</p>
+        </div>
+
+        <div class="utility-card">
+          <div class="utility-icon">🎓</div>
+          <h3>Student Rewards</h3>
+          <p>Earn $MYXEN rewards for educational payments</p>
+        </div>
+
+        <div class="utility-card">
+          <div class="utility-icon">🏪</div>
+          <h3>Merchant Staking</h3>
+          <p>Stake $MYXEN to reduce payment processing fees</p>
+        </div>
+
+        <div class="utility-card">
+          <div class="utility-icon">⚡</div>
+          <h3>Governance</h3>
+          <p>Vote on platform upgrades and feature development</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="section" style="background: var(--glass-bg);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Development Roadmap</h2>
+        <p class="section-subtitle">Our journey to revolutionize global payments</p>
+      </div>
+
+      <div class="roadmap">
+        <div class="roadmap-phase">
+          <h3 class="phase-title">Phase 1: Launch</h3>
+          <ul class="phase-items">
+            <li>Fair launch on Pump.fun</li>
+            <li>Website and dashboard launch</li>
+            <li>Basic QR payment system</li>
+            <li>Community building</li>
+            <li>Initial exchange listings</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-phase">
+          <h3 class="phase-title">Phase 2: Growth</h3>
+          <ul class="phase-items">
+            <li>VISA virtual card integration</li>
+            <li>Student rewards program</li>
+            <li>Mobile app development</li>
+            <li>Merchant onboarding</li>
+            <li>Advanced payment features</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-phase">
+          <h3 class="phase-title">Phase 3: Expansion</h3>
+          <ul class="phase-items">
+            <li>Global payment network</li>
+            <li>Streaming payroll system</li>
+            <li>API for developers</li>
+            <li>Cross-chain integration</li>
+            <li>Enterprise solutions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contract Information -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Smart Contract</h2>
+        <p class="section-subtitle">Verified and audited smart contract details</p>
+      </div>
+
+      <div class="contract-address">
+        <h3 style="color: var(--primary); margin-bottom: 1rem;">$MYXEN Contract Address</h3>
+        <div class="address-display" id="contract-address">
+          COMING SOON AFTER LAUNCH
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+          <button class="btn btn-primary" onclick="copyContractAddress()">
+            Copy Address
+          </button>
+          <button class="btn btn-primary" onclick="viewOnExplorer()">
+            View on Explorer
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>MyXenPay</h3>
+          <p>Secure Crypto Payment Gateway for the Future of Finance</p>
+          <div class="trust-badges" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; align-items: flex-start;">
+            <span style="background: #00d664; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; width: fit-content;">🔒 SSL Secured</span>
+            <span style="background: #4a5568; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; width: fit-content;">⚡ Instant</span>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Product</h3>
+          <ul class="footer-links">
+            <li><a href="merchants.php">For Businesses</a></li>
+            <li><a href="developers.php">Developers</a></li>
+            <li><a href="tokenomics.php">Tokenomics</a></li>
+            <li><a href="student-rewards.php">Student Rewards</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li><a href="whitepaper.php">Whitepaper</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
+            <li><a href="help.html">Help Center</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2024 MyXenPay. All rights reserved. Making crypto payments accessible for everyone.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Navigation
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    mobileNavToggle.addEventListener('click', () => {
+      mobileNavToggle.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile nav when clicking on a link
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNavToggle.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Theme Toggle
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved) {
+        document.body.setAttribute('data-theme', saved);
+        document.getElementById('theme-logo').src = saved === 'dark' ? 'myxenpay-logo-dark.png' : 'myxenpay-logo-light.png';
+        document.getElementById('theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀️';
+      } else if (prefersDark) {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-logo').src = 'myxenpay-logo-dark.png';
+        document.getElementById('theme-toggle').textContent = '🌙';
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+        document.getElementById('theme-logo').src = 'myxenpay-logo-light.png';
+        document.getElementById('theme-toggle').textContent = '☀️';
+      }
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.getElementById('theme-logo').src = newTheme === 'dark' ? 'myxenpay-logo-dark.png' : 'myxenpay-logo-light.png';
+      document.getElementById('theme-toggle').textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    });
+
+    // Wallet Connection
+    let walletConnected = false;
+    let walletAddress = null;
+
+    async function connectWallet() {
+      const provider = window.solana || window.phantom?.solana;
+      const connectBtn = document.getElementById('connect-btn');
+      
+      if (!provider) {
+        alert('Please install Phantom or Backpack wallet.');
+        return;
+      }
+      
+      if (walletConnected) {
+        try {
+          if (provider.disconnect) {
+            await provider.disconnect();
+          }
+          walletConnected = false;
+          walletAddress = null;
+          connectBtn.textContent = 'Connect Wallet';
+          connectBtn.classList.remove('connected');
+          return;
+        } catch (error) {
+          console.error('Disconnect failed:', error);
+        }
+      }
+      
+      const originalText = connectBtn.textContent;
+      connectBtn.innerHTML = '<div class="loading"></div>';
+      connectBtn.disabled = true;
+      
+      try {
+        const response = await provider.connect();
+        walletConnected = true;
+        walletAddress = response.publicKey.toString();
+        
+        const truncatedAddress = walletAddress.substring(0, 4) + '...' + walletAddress.substring(walletAddress.length - 4);
+        connectBtn.textContent = `Disconnect ${truncatedAddress}`;
+        connectBtn.classList.add('connected');
+        connectBtn.disabled = false;
+        
+      } catch (err) {
+        console.error('Connection failed:', err);
+        connectBtn.textContent = 'Failed - Retry';
+        connectBtn.disabled = false;
+        setTimeout(() => {
+          connectBtn.textContent = originalText;
+        }, 3000);
+      }
+    }
+
+    document.getElementById('connect-btn').addEventListener('click', connectWallet);
+
+    // Tokenomics-specific functions
+    function copyContractAddress() {
+      const address = document.getElementById('contract-address').textContent;
+      if (address !== 'COMING SOON AFTER LAUNCH') {
+        navigator.clipboard.writeText(address).then(() => {
+          alert('Contract address copied to clipboard!');
+        });
+      } else {
+        alert('Contract address will be available after launch!');
+      }
+    }
+
+    function viewOnExplorer() {
+      const address = document.getElementById('contract-address').textContent;
+      if (address !== 'COMING SOON AFTER LAUNCH') {
+        window.open(`https://solscan.io/token/${address}`, '_blank');
+      } else {
+        alert('Contract address will be available after launch!');
+      }
+    }
+
+    // Animate distribution bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fills = document.querySelectorAll('.distribution-fill');
+          fills.forEach(fill => {
+            const width = fill.style.width;
+            fill.style.width = '0';
+            setTimeout(() => {
+              fill.style.width = width;
+            }, 100);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(document.querySelector('.distribution-chart'));
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+</body>
+</html>

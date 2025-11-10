@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frequently Asked Questions - MyxenPay</title>
+  <meta name="description" content="Get answers to all your questions about MyxenPay - the global crypto payments platform on Solana.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      padding-top: 80px;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.5rem 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .top-nav a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .top-nav a:hover {
+      color: var(--accent);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 40px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      height: 48px;
+      width: auto;
+    }
+
+    .back-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .faq-categories {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .category-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .faq-section {
+      margin-bottom: 3rem;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .faq-question {
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .faq-answer.show {
+      display: block;
+    }
+
+    .contact-cta {
+      text-align: center;
+      padding: 3rem 0;
+      background: var(--card-bg);
+      border-radius: 20px;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="/tokenomics">Tokenomics</a>
+    <a href="/merchant">Merchant QR</a>
+    <a href="/student-rewards">Student Rewards</a>
+    <a href="/streaming-payroll">Streaming Payroll</a>
+    <a href="/retail-commerce">Retail & Commerce</a>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <a href="/" class="back-btn">← Back to Home</a>
+    <img src="myxenpay-logo-light.png" alt="MyxenPay" class="logo" id="theme-logo">
+    <div></div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to common questions about MyxenPay</p>
+    </div>
+
+    <!-- FAQ Categories -->
+    <div class="faq-categories">
+      <button class="category-btn active" data-category="general">General</button>
+      <button class="category-btn" data-category="team">Team</button>
+      <button class="category-btn" data-category="token">Token & Economics</button>
+      <button class="category-btn" data-category="merchant">Merchant Services</button>
+      <button class="category-btn" data-category="technical">Technical</button>
+      <button class="category-btn" data-category="legal">Legal & Compliance</button>
+    </div>
+
+    <!-- General FAQs -->
+    <div class="faq-section" id="general-faq">
+      <h2>General Questions</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          What is MyxenPay?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay is a comprehensive crypto payments platform built on Solana blockchain that enables:</p>
+          <ul>
+            <li>Global QR code payments for merchants</li>
+            <li>Real-time streaming payroll for businesses</li>
+            <li>Student rewards and cashback programs</li>
+            <li>VISA virtual card integration</li>
+            <li>Instant settlements with minimal fees</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          How is MyxenPay different from traditional payment processors?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>Traditional Processors (Stripe, PayPal):</strong></p>
+          <ul>
+            <li>2-3% transaction fees</li>
+            <li>2-5 day settlement periods</li>
+            <li>Geographical restrictions</li>
+            <li>Bank account requirements</li>
+            <li>Chargeback risks</li>
+          </ul>
+          <p><strong>MyxenPay:</strong></p>
+          <ul>
+            <li>0.5% transaction fees (0.02% for basic transfers)</li>
+            <li>Instant settlements</li>
+            <li>Global accessibility</li>
+            <li>No bank account needed</li>
+            <li>No chargebacks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          What blockchain does MyxenPay use?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay is built entirely on <strong>Solana blockchain</strong> due to its:</p>
+          <ul>
+            <li>High transaction speed (65,000 TPS)</li>
+            <li>Low transaction costs ($0.00025 per transaction)</li>
+            <li>Proven security and reliability</li>
+            <li>Strong ecosystem and developer support</li>
+            <li>Environmental efficiency (Proof of History consensus)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Is MyxenPay available in my country?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay is available <strong>globally</strong> in all countries where cryptocurrency usage is permitted. Since we're a non-custodial platform:</p>
+          <ul>
+            <li>No geographical restrictions for basic payments</li>
+            <li>Works anywhere with internet access</li>
+            <li>No currency conversion fees</li>
+            <li>24/7 availability worldwide</li>
+          </ul>
+          <p><em>Note: Some advanced features may have regional restrictions based on local regulations.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team FAQs -->
+    <div class="faq-section" id="team-faq" style="display: none;">
+      <h2>Team & Company</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          Who is behind MyxenPay?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay is developed by an <strong>anonymous team</strong> of blockchain developers, financial technology experts, and payment system specialists. We believe in:</p>
+          <ul>
+            <li><strong>Building first, talking later</strong> - Focus on product development over marketing hype</li>
+            <li><strong>Community-driven growth</strong> - Let the utility speak for itself</li>
+            <li><strong>Transparency through code</strong> - All contracts are verified and open for audit</li>
+          </ul>
+          <p><strong>Main Coordinator:</strong> <a href="https://x.com/bikkhoto_devs" target="_blank">@bikkhoto_devs</a> on X (Twitter)</p>
+          <p><em>The team will disclose identities after completing all major roadmap milestones and establishing strong utility.</em></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Why is the team anonymous?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>We've chosen to remain anonymous for several strategic reasons:</p>
+          <ul>
+            <li><strong>Focus on Product</strong> - Avoid personality cults and focus entirely on building the best payment platform</li>
+            <li><strong>Prevent Pre-judgment</strong> - Let the technology and utility speak for itself rather than being judged by team backgrounds</li>
+            <li><strong>Global Compliance</strong> - Different jurisdictions have varying regulations; anonymity allows global development</li>
+            <li><strong>Security</strong> - Protect team members from targeted attacks while building critical infrastructure</li>
+            <li><strong>Community Trust</strong> - Build trust through delivered milestones rather than promises</li>
+          </ul>
+          <p>We're committed to full disclosure after achieving our roadmap goals and establishing undeniable utility.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          When will the team reveal their identities?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>The team will reveal identities after completing these key milestones:</p>
+          <ul>
+            <li>✅ Successful fair launch on Pump.fun</li>
+            <li>✅ Main platform development completion</li>
+            <li>✅ 10,000+ active merchants using the platform</li>
+            <li>✅ $1M+ in daily transaction volume</li>
+            <li>✅ VISA virtual card integration live</li>
+            <li>✅ Full regulatory compliance in major markets</li>
+            <li>✅ Sustainable revenue model established</li>
+          </ul>
+          <p>We believe in <strong>actions over words</strong> and will earn the community's trust through delivered results.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          How can I contact the team?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>You can reach us through:</p>
+          <ul>
+            <li><strong>X (Twitter):</strong> <a href="https://x.com/bikkhoto_devs" target="_blank">@bikkhoto_devs</a> - Main coordinator</li>
+            <li><strong>Email:</strong> support@myxenpay.finance - General inquiries</li>
+            <li><strong>Telegram:</strong> Coming soon - Community group</li>
+            <li><strong>GitHub:</strong> Coming soon - Open source contributions</li>
+          </ul>
+          <p>For business partnerships: partnerships@myxenpay.finance</p>
+          <p>For technical support: dev@myxenpay.finance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Token FAQs -->
+    <div class="faq-section" id="token-faq" style="display: none;">
+      <h2>Token & Economics</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          What is $MYXEN token?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>$MYXEN is the utility token powering the MyxenPay ecosystem with these key functions:</p>
+          <ul>
+            <li><strong>Payment Method</strong> - Use $MYXEN for payments with discounted fees</li>
+            <li><strong>Governance</strong> - Vote on platform upgrades and feature development</li>
+            <li><strong>Staking Rewards</strong> - Earn platform revenue share by staking tokens</li>
+            <li><strong>Fee Discounts</strong> - Reduced transaction fees for token holders</li>
+            <li><strong>VISA Card Access</strong> - Required for virtual card issuance</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          What is the tokenomics of $MYXEN?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>Total Supply:</strong> 1,000,000,000 $MYXEN</p>
+          <p><strong>Distribution:</strong></p>
+          <ul>
+            <li><strong>90% - Fair Launch:</strong> Available to community through Pump.fun and Raydium</li>
+            <li><strong>5% - Development Fund:</strong> Locked for 12 months, then vested over 24 months</li>
+            <li><strong>3% - Marketing & Growth:</strong> Community initiatives, partnerships, listings</li>
+            <li><strong>2% - Team:</strong> Locked for 18 months, vested over 36 months</li>
+          </ul>
+          <p><strong>Key Features:</strong></p>
+          <ul>
+            <li>No pre-sale or private rounds</li>
+            <li>No team allocation before public launch</li>
+            <li>30% of platform revenue used for buybacks and burns</li>
+            <li>Deflationary mechanism through transaction burns</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          How does the revenue sharing work?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay distributes platform revenue through a transparent mechanism:</p>
+          <ul>
+            <li><strong>30% - Token Buybacks & Burns:</strong> Monthly buybacks from open market followed by token burns</li>
+            <li><strong>40% - Platform Development:</strong> Ongoing development, security, and feature expansion</li>
+            <li><strong>20% - Staking Rewards:</strong> Distributed to users staking $MYXEN tokens</li>
+            <li><strong>10% - Legal & Compliance:</strong> Regulatory compliance across jurisdictions</li>
+          </ul>
+          <p>All revenue distribution is transparent and verifiable on-chain.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Where can I buy $MYXEN tokens?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>$MYXEN will be available through:</p>
+          <ul>
+            <li><strong>Primary Launch:</strong> Pump.fun (initial fair launch)</li>
+            <li><strong>Secondary Market:</strong> Raydium (immediately after Pump.fun completion)</li>
+            <li><strong>Future Listings:</strong> Major centralized exchanges (planned after volume growth)</li>
+          </ul>
+          <p><strong>How to Participate in Fair Launch:</strong></p>
+          <ol>
+            <li>Connect your Solana wallet (Phantom, Backpack, etc.)</li>
+            <li>Visit Pump.fun when launch countdown completes</li>
+            <li>Purchase $MYXEN tokens with SOL</li>
+            <li>Tokens automatically become tradeable on Raydium after bonding curve completion</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merchant FAQs -->
+    <div class="faq-section" id="merchant-faq" style="display: none;">
+      <h2>Merchant Services</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          How do I start accepting crypto payments as a merchant?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Getting started takes less than 5 minutes:</p>
+          <ol>
+            <li>Visit <a href="/merchant">MyxenPay Merchant</a> page</li>
+            <li>Enter your Solana wallet address</li>
+            <li>Generate your unique QR code</li>
+            <li>Display the QR code in your store or online</li>
+            <li>Start accepting payments instantly</li>
+          </ol>
+          <p><strong>No registration, no KYC, no waiting period.</strong></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          What are the fees for merchants?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>MyxenPay offers the lowest fees in the industry:</p>
+          <ul>
+            <li><strong>Basic Crypto Payments:</strong> 0.5% per transaction</li>
+            <li><strong>$MYXEN Token Payments:</strong> 0.25% (50% discount)</li>
+            <li><strong>Streaming Payroll:</strong> 0.5% flat fee</li>
+            <li><strong>VISA Virtual Card:</strong> 1% + network fees</li>
+            <li><strong>No hidden fees, no monthly charges</strong></li>
+          </ul>
+          <p><em>Compare to traditional processors: Stripe (2.9% + $0.30), PayPal (3.49% + fixed fee)</em></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          How quickly do merchants receive payments?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>Instant settlement</strong> - Payments arrive in your wallet within seconds of the transaction.</p>
+          <p><strong>Traditional Comparison:</strong></p>
+          <ul>
+            <li>Credit Cards: 2-3 business days</li>
+            <li>Bank Transfers: 1-5 business days</li>
+            <li>PayPal: Instant to 1 business day</li>
+            <li><strong>MyxenPay: 5-10 seconds</strong></li>
+          </ul>
+          <p>No waiting for batch processing or bank settlements.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Can I integrate MyxenPay with my existing POS system?
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes! MyxenPay offers multiple integration options:</p>
+          <ul>
+            <li><strong>QR Code Display:</strong> Simple print-and-display for physical stores</li>
+            <li><strong>API Integration:</strong> REST API for custom POS integration</li>
+            <li><strong>E-commerce Plugins:</strong> Shopify, WooCommerce, Magento (coming soon)</li>
+            <li><strong>Mobile App SDK:</strong> For custom mobile applications</li>
+            <li><strong>Web Widget:</strong> Embeddable payment button for websites</li>
+          </ul>
+          <p>Contact our integration team at: integrations@myxenpay.finance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="contact-cta">
+      <h2>Still Have Questions?</h2>
+      <p>We're here to help you understand everything about MyxenPay</p>
+      <div style="margin-top: 1.5rem;">
+        <a href="mailto:support@myxenpay.finance" class="btn" style="background: var(--primary); color: white; padding: 1rem 2rem; border-radius: 10px; text-decoration: none; display: inline-block; margin-right: 1rem;">Email Support</a>
+        <a href="/contact" class="btn" style="border: 2px solid var(--primary); color: var(--primary); padding: 1rem 2rem; border-radius: 10px; text-decoration: none; display: inline-block;">Contact Form</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const answer = item.querySelector('.faq-answer');
+        const plus = item.querySelector('.faq-question span');
+        
+        if (answer.classList.contains('show')) {
+          answer.classList.remove('show');
+          plus.textContent = '+';
+        } else {
+          // Close all other answers
+          document.querySelectorAll('.faq-answer').forEach(ans => ans.classList.remove('show'));
+          document.querySelectorAll('.faq-question span').forEach(p => p.textContent = '+');
+          
+          answer.classList.add('show');
+          plus.textContent = '−';
+        }
+      });
+    });
+
+    // Category switching
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+        
+        // Update active button
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Show selected category
+        document.querySelectorAll('.faq-section').forEach(section => {
+          section.style.display = 'none';
+        });
+        document.getElementById(category + '-faq').style.display = 'block';
+      });
+    });
+
+    // Theme functionality
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.body.setAttribute('data-theme', theme);
+      document.getElementById('theme-logo').src = theme === 'dark' ? 'myxenpay-logo-dark.png' : 'myxenpay-logo-light.png';
+    }
+
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+</body>
+</html>

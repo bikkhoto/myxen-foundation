@@ -1,0 +1,61 @@
+---
+# MyXen Foundation cPanel Deployment Configuration
+# Automatically deploys to cPanel hosting on push to main branch
+
+deployment:
+  tasks:
+    # Set deployment path to your public_html directory
+    - export DEPLOYPATH=$HOME/public_html
+    - export NODE_ENV=production
+    
+    # Clean up previous deployment (optional - uncomment if needed)
+    # - /bin/rm -rf $DEPLOYPATH/*
+    
+    # Create deployment directory
+    - /bin/mkdir -p $DEPLOYPATH
+    
+    # Deploy PHP website (myxen foundation)
+    - echo "Deploying PHP website..."
+    - /bin/cp -R "myxen foundation"/.htaccess $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.php $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.html $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.css $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.js $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.json $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.txt $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/*.xml $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/admin $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/api $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/assets $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/core $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/data $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/includes $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/modules $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/vendor $DEPLOYPATH/
+    - /bin/cp -R "myxen foundation"/.well-known $DEPLOYPATH/
+    
+    # Install PHP Composer dependencies
+    - echo "Installing PHP dependencies..."
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader 2>/dev/null || echo "Composer not available or already installed"
+    
+    # Deploy Next.js dApp to subdirectory (e.g., /dapp)
+    - echo "Deploying Next.js dApp..."
+    - /bin/mkdir -p $DEPLOYPATH/dapp
+    - cd $HOME/repository/myxenpay-dapp
+    - npm install --production
+    - npm run build
+    - /bin/cp -R out/* $DEPLOYPATH/dapp/
+    
+    # Set correct permissions
+    - chmod -R 755 $DEPLOYPATH
+    - find $DEPLOYPATH -type f -exec chmod 644 {} \;
+    - find $DEPLOYPATH -type d -exec chmod 755 {} \;
+    
+    # Make sure writable directories have proper permissions
+    - chmod -R 777 $DEPLOYPATH/data
+    - chmod -R 777 $DEPLOYPATH/assets/qrcodes
+    
+    - echo "✅ Deployment completed successfully!"
+    - echo "PHP Website: https://myxenpay.finance"
+    - echo "Next.js dApp: https://myxenpay.finance/dapp"

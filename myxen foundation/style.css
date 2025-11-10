@@ -1,0 +1,26 @@
+/* Logo with CSS background images */
+.logo {
+    height: 32px;
+    width: 150px; /* Adjust based on your logo aspect ratio */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+[data-theme="light"] .logo {
+    background-image: url('myxenpay-logo-light.png');
+}
+
+[data-theme="dark"] .logo {
+    background-image: url('myxenpay-logo-dark.png');
+}
+
+/* Fallback if dark logo doesn't exist */
+[data-theme="dark"] .logo {
+    background-image: url('myxenpay-logo-dark.png'), url('myxenpay-logo-light.png');
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}

@@ -1,0 +1,28 @@
+{
+  "name": "MyXenPay",
+  "symbol": "MYXN",
+  "description": "Global decentralized payment network for merchants, students, and developers. Built on Solana for instant and low-fee transactions.",
+  "image": "https://myxenpay.finance/myxenpay-token-logo.png",
+  "seller_fee_basis_points": 0,
+  "properties": {
+    "files": [
+      {
+        "uri": "https://myxenpay.finance/myxenpay-token-logo.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  },
+  "extensions": {
+    "website": "https://myxenpay.finance",
+    "twitter": "https://x.com/myxenpay",
+    "telegram": "https://t.me/myxenpay",
+    "github": "https://github.com/bikkhoto/myxenpay.finance",
+    "whitepaper": "https://myxenpay.finance/whitepaper.php",
+    "reddit": "https://www.reddit.com/user/MyXen_Inc/",
+    "medium": "https://medium.com/@myxeninc",
+    "instagram": "https://www.instagram.com/myxenp_inc/",
+    "facebook": "https://www.facebook.com/myxen.foundation/"
+  },
+  "tags": ["DeFi", "Payments", "Solana", "Utility", "Global", "MyXenPay"]
+}

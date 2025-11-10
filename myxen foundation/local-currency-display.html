@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyxenPay – USDT to Crypto Converter</title>
+  <meta name="description" content="Convert USDT to major cryptocurrencies instantly with MyxenPay's non-custodial DeFi platform.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      padding-top: 60px;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.5rem 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .top-nav a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .logo {
+      height: 64px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .theme-btn, .connect-btn {
+      background: none;
+      border: 1px solid var(--border);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .connect-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: auto;
+      padding: 0 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .wallet-connected {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .wallet-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .wallet-address {
+      font-size: 0.85rem;
+    }
+
+    .disconnect-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 4px;
+    }
+
+    .hero {
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .converter-section {
+      padding: 2rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .converter-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .converter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .form-control {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .swap-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .swap-btn:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .swap-btn:disabled {
+      background: #64748b;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-display {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .result-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .features-section {
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    .features-section h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    footer {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .verified-badges {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: var(--secondary);
+      color: black;
+      padding: 0.2rem 0.6rem;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge.solana { background: #4ade80; }
+    .badge.gdpr { background: #059669; }
+    .badge.safe { background: #60a5fa; }
+
+    @media (max-width: 600px) {
+      .converter-card { padding: 1.5rem; }
+      .top-nav { flex-wrap: wrap; gap: 0.8rem; padding: 0.5rem; }
+      .result-amount { font-size: 1.5rem; }
+      .wallet-info { flex-direction: column; gap: 0.2rem; }
+      .wallet-address { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="whitepaper.html">Whitepaper</a>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <img id="theme-logo" src="myxenpay-logo-light.png" alt="MyxenPay" class="logo">
+    <div class="header-actions">
+      <button id="theme-toggle" class="theme-btn">☀️</button>
+      <div id="wallet-section">
+        <button id="connect-btn" class="connect-btn">Connect Wallet</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>USDT to Crypto Converter</h1>
+    <p>Convert Tether (USDT) to major cryptocurrencies instantly</p>
+  </section>
+
+  <!-- Converter Section -->
+  <section class="converter-section">
+    <div class="converter-card">
+      <div class="converter-form">
+        <div class="form-group">
+          <label for="fromCurrency">From</label>
+          <select id="fromCurrency" class="form-control">
+            <option value="USDT" selected>USDT (Tether)</option>
+            <option value="MYXEN">MYXEN</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="toCurrency">To</label>
+          <select id="toCurrency" class="form-control">
+            <option value="BTC">BTC (Bitcoin)</option>
+            <option value="ETH">ETH (Ethereum)</option>
+            <option value="BNB">BNB (Binance Coin)</option>
+            <option value="XRP">XRP (Ripple)</option>
+            <option value="ADA">ADA (Cardano)</option>
+            <option value="SOL">SOL (Solana)</option>
+            <option value="DOT">DOT (Polkadot)</option>
+            <option value="DOGE">DOGE (Dogecoin)</option>
+            <option value="MYXEN">MYXEN</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" class="form-control" placeholder="Enter amount" min="0" step="0.01">
+          <div id="amount-error" class="error-message"></div>
+        </div>
+        
+        <button class="swap-btn" id="convertBtn">Convert Now</button>
+        
+        <div class="result-display">
+          <div class="result-amount" id="resultAmount">0.00</div>
+          <div class="result-label" id="resultLabel">You will receive</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles Section -->
+  <section class="features-section">
+    <h2>Why $MyXenPay is Important</h2>
+    <div class="features-grid">
+      <div class="card">
+        <div class="feature-icon">🌍</div>
+        <h3>Global Accessibility</h3>
+        <p>$MyXenPay enables seamless cryptocurrency transactions worldwide, breaking down financial barriers and providing access to digital assets for everyone.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon">💸</div>
+        <h3>Low Transaction Fees</h3>
+        <p>With $MyXenPay, users enjoy significantly lower transaction costs compared to traditional financial systems, making micro-transactions feasible.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast Processing</h3>
+        <p>Transactions with $MyXenPay are processed in minutes, not days, providing immediate access to funds and reducing waiting times.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon">🤝</div>
+        <h3>Financial Inclusion</h3>
+        <p>$MyXenPay empowers the unbanked population by providing access to financial services without requiring traditional banking infrastructure.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon">🔒</div>
+        <h3>Secure Transactions</h3>
+        <p>Built on blockchain technology, $MyXenPay offers enhanced security and transparency, reducing fraud and unauthorized transactions.</p>
+      </div>
+      <div class="card">
+        <div class="feature-icon">🌐</div>
+        <h3>Cross-Border Payments</h3>
+        <p>$MyXenPay simplifies international transactions, eliminating currency conversion fees and reducing transfer times across borders.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 MyxenPay Ltd. Registered in England & Wales. Company No. [●●●●●●●●]</p>
+    <p>Non-custodial DeFi for students, merchants, and the next billion.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <div class="verified-badges">
+      <span class="badge solana">✅ Verified by Solana</span>
+      <span class="badge gdpr">🔒 GDPR Compliant</span>
+      <span class="badge safe">🛡️ Safe Transactions</span>
+    </div>
+  </footer>
+
+  <script>
+    // Anti-scrape
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+
+    // Theme + Logo
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved) {
+        document.body.setAttribute('data-theme', saved);
+        document.getElementById('theme-logo').src = saved === 'dark' ? 'myxenpay-logo-dark.png' : 'myxenpay-logo-light.png';
+        document.getElementById('theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀️';
+      } else if (prefersDark) {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-logo').src = 'myxenpay-logo-dark.png';
+        document.getElementById('theme-toggle').textContent = '🌙';
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+        document.getElementById('theme-logo').src = 'myxenpay-logo-light.png';
+        document.getElementById('theme-toggle').textContent = '☀️';
+      }
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.getElementById('theme-logo').src = newTheme === 'dark' ? 'myxenpay-logo-dark.png' : 'myxenpay-logo-light.png';
+      document.getElementById('theme-toggle').textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    });
+
+    // Wallet Connection
+    let walletConnected = false;
+    let walletAddress = null;
+    const walletSection = document.getElementById('wallet-section');
+    const connectBtn = document.getElementById('connect-btn');
+
+    function updateWalletUI() {
+      if (walletConnected && walletAddress) {
+        const truncatedAddress = `${walletAddress.substring(0, 4)}...${walletAddress.substring(walletAddress.length - 4)}`;
+        walletSection.innerHTML = `
+          <div class="connect-btn wallet-connected wallet-info">
+            <span class="wallet-address">${truncatedAddress}</span>
+            <button class="disconnect-btn" id="disconnect-btn">✕</button>
+          </div>
+        `;
+        document.getElementById('disconnect-btn').addEventListener('click', disconnectWallet);
+      } else {
+        walletSection.innerHTML = '<button id="connect-btn" class="connect-btn">Connect Wallet</button>';
+        document.getElementById('connect-btn').addEventListener('click', connectWallet);
+      }
+    }
+
+    function connectWallet() {
+      const provider = window.solana || window.phantom?.solana;
+      if (!provider) {
+        alert('Please install Phantom or Backpack wallet.');
+        return;
+      }
+      
+      provider.connect()
+        .then(response => {
+          walletConnected = true;
+          walletAddress = response.publicKey.toString();
+          updateWalletUI();
+        })
+        .catch(err => {
+          alert('Connection failed: ' + err.message);
+        });
+    }
+
+    function disconnectWallet() {
+      const provider = window.solana || window.phantom?.solana;
+      if (provider && provider.disconnect) {
+        provider.disconnect();
+      }
+      walletConnected = false;
+      walletAddress = null;
+      updateWalletUI();
+    }
+
+    // Currency Conversion Functionality
+    const convertBtn = document.getElementById('convertBtn');
+    const fromCurrency = document.getElementById('fromCurrency');
+    const toCurrency = document.getElementById('toCurrency');
+    const amountInput = document.getElementById('amount');
+    const resultAmount = document.getElementById('resultAmount');
+    const resultLabel = document.getElementById('resultLabel');
+    const amountError = document.getElementById('amount-error');
+
+    // Mock conversion rates (in a real application, these would come from an API)
+    const conversionRates = {
+      'BTC': 0.000025,
+      'ETH': 0.0004,
+      'BNB': 0.003,
+      'XRP': 1.5,
+      'ADA': 3.2,
+      'SOL': 0.08,
+      'DOT': 0.15,
+      'DOGE': 12.5,
+      'MYXEN': 25, // 1 USDT = 25 MYXEN
+      'USDT': 1
+    };
+
+    function validateAmount(amount) {
+      if (isNaN(amount) || amount <= 0) {
+        amountError.textContent = 'Please enter a valid amount';
+        return false;
+      }
+      
+      if (amount > 1000000) {
+        amountError.textContent = 'Amount too large. Maximum is 1,000,000';
+        return false;
+      }
+      
+      amountError.textContent = '';
+      return true;
+    }
+
+    function updateConversion() {
+      const amount = parseFloat(amountInput.value);
+      const fromCurrencyValue = fromCurrency.value;
+      const toCurrencyValue = toCurrency.value;
+      
+      if (!validateAmount(amount)) {
+        resultAmount.textContent = '0.00';
+        resultLabel.textContent = 'You will receive';
+        convertBtn.disabled = true;
+        return;
+      }
+      
+      // Prevent converting between same currencies
+      if (fromCurrencyValue === toCurrencyValue) {
+        amountError.textContent = 'Cannot convert between the same currencies';
+        resultAmount.textContent = amount.toFixed(8);
+        resultLabel.textContent = `${toCurrencyValue} (same currency)`;
+        convertBtn.disabled = true;
+        return;
+      }
+      
+      convertBtn.disabled = false;
+      
+      // Convert through USDT as base currency
+      const fromRate = conversionRates[fromCurrencyValue];
+      const toRate = conversionRates[toCurrencyValue];
+      
+      // Convert from source to USDT, then from USDT to target
+      const usdtAmount = amount * fromRate;
+      const convertedAmount = usdtAmount / toRate;
+      
+      resultAmount.textContent = convertedAmount.toFixed(8);
+      resultLabel.textContent = `${toCurrencyValue} (${toCurrency.options[toCurrency.selectedIndex].text})`;
+    }
+
+    convertBtn.addEventListener('click', updateConversion);
+
+    // Auto-convert when amount changes
+    amountInput.addEventListener('input', updateConversion);
+
+    // Update conversion when currency changes
+    fromCurrency.addEventListener('change', updateConversion);
+    toCurrency.addEventListener('change', updateConversion);
+
+    // Initialize conversion with default values
+    updateConversion();
+    updateWalletUI();
+
+    // Init
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+</body>
+</html>

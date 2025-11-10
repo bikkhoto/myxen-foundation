@@ -42,8 +42,8 @@ jobs:
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.CPANEL_FTP_SERVER }}
-          username: ${{ secrets.CPANEL_FTP_USER }}
+          server: myxenpay.finance
+          username: myxenpay
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           local-dir: ./deploy/
           server-dir: ./public_html/

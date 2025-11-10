@@ -29,10 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build & Export
-        run: |
-          npm run build
-          npx next export
+      - name: Build
+        run: npm run build
 
       - name: Prepare SSH
         shell: bash
@@ -41,7 +39,7 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          eval "$(ssh-agent -s)"
+          eval "")(ssh-agent -s)"
           if [ -n "${SSH_PASSPHRASE:-}" ]; then
             printf '%s\n' '#!/usr/bin/env bash' 'echo "$SSH_PASSPHRASE"' > ~/.ssh/askpass.sh
             chmod +x ~/.ssh/askpass.sh
@@ -84,11 +82,11 @@ jobs:
         run: |
           if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip backup'; exit 0; fi
           PORT="${SSH_PORT:-22}"; TS=$(date +%F_%H%M%S)
-          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_TARGET}/backups' && cd '${DEPLOY_TARGET}' && tar -czf 'backups/site_${TS}.tar.gz' . --exclude 'backups' || true"
+          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "mkdir -p '${DEPLOY_TARGET}/backups' && cd '${DEPLOY_TARGET}' && tar -czf 'backups/site_${TS}.tar.gz' . --exclude 'backups'"
 
       - name: Remote post-deploy
         shell: bash
         run: |
           if [ -z "${DEPLOY_TARGET}" ]; then echo 'DEPLOY_TARGET not set; skip post-deploy'; exit 0; fi
           PORT="${SSH_PORT:-22}"
-          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "cd '${DEPLOY_TARGET}' || exit 0; if command -v composer >/dev/null 2>&1; then composer install --no-dev --prefer-dist --no-interaction || true; fi; find . -type d -exec chmod 755 {} +; find . -type f -exec chmod 644 {} +"
+          ssh -p "$PORT" -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "cd '${DEPLOY_TARGET}' || exit 0; if command -v composer >/dev/null 2>&1; then composer install --no-dev --prefer-dist --optimize-autoloader; fi"

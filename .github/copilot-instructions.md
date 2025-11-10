@@ -4,17 +4,25 @@
 
 MyXen Foundation is a community-focused, fully decentralized open ledger ecosystem built on Solana. The project emphasizes transparency with a developer wallet system visible to all participants.
 
-**Current Status**: Foundation repository established; Next.js application structure pending implementation.
+**Current Status**: Next.js DApp implemented with Solana wallet integration and transparent developer wallet display. The PHP-based website exists in `myxen foundation/` directory alongside the Next.js application.
 
 ## Technology Stack
 
 - **Blockchain**: Solana
-- **Frontend Framework**: Next.js (planned, CI/CD configured)
+- **Frontend Framework**: Next.js with TypeScript and Tailwind CSS
 - **Deployment**: GitHub Pages via Static Site Generation
 - **Node Version**: 20.x
-- **Package Manager**: Auto-detected (npm/yarn support configured)
+- **Package Manager**: npm
+- **Wallet Integration**: @solana/wallet-adapter-react with Phantom and Solflare support
+- **Solana RPC**: Mainnet connection via @solana/web3.js
 
 ## Project Architecture
+
+### Repository Structure
+
+The repository contains two main applications:
+1. **Next.js DApp** (root directory): Modern Web3 application with Solana wallet integration
+2. **PHP Website** (`myxen foundation/` directory): Legacy website with existing Solana integration
 
 ### Deployment Pipeline
 
@@ -24,6 +32,15 @@ The repository uses GitHub Actions for automated deployment (`.github/workflows/
 - Builds Next.js with static site generation for GitHub Pages
 - Output directory: `./out` (configured for static export)
 - Production environment deploys to GitHub Pages with automatic URL
+
+### DApp Components
+
+- **WalletProvider** (`components/WalletProvider.tsx`): Solana wallet adapter integration
+- **Header** (`components/Header.tsx`): Navigation with wallet connection button
+- **Hero** (`components/Hero.tsx`): Landing section with connection status
+- **DeveloperWallets** (`components/DeveloperWallets.tsx`): Transparent developer wallet display with real-time balances
+- **Features** (`components/Features.tsx`): Feature highlights
+- **Footer** (`components/Footer.tsx`): Site footer with links
 
 ### Key Configuration Details
 
@@ -51,13 +68,18 @@ yarn install
 yarn next build
 ```
 
-### Adding Next.js Project Structure
+### Working with Next.js DApp
 
-When initializing the Next.js application:
-1. Ensure `next.config.js` includes `output: 'export'` for static generation
-2. Configure `basePath` if deploying to a non-root GitHub Pages path
-3. Set `images.unoptimized: true` for GitHub Pages compatibility
-4. Verify `out` directory is generated during build
+The Next.js application is configured for static export:
+1. `next.config.ts` includes `output: 'export'` for static generation
+2. `images.unoptimized: true` is set for GitHub Pages compatibility
+3. Build generates static files in `./out` directory
+4. All components use 'use client' directive for client-side interactivity
+
+When making changes:
+- Run `npm run build` to generate static export
+- Components requiring browser APIs must use 'use client' directive
+- Avoid using Next.js server-side features (API routes, server components with dynamic data)
 
 ## Project-Specific Conventions
 
@@ -82,14 +104,23 @@ This project prioritizes:
 - `LICENSE`: MIT License (permissive open source)
 - `logo.png`, `fevicon.jpg`: Brand assets for UI integration
 
-## Next Steps for Implementation
+## Implementation Status
 
-When building out this repository, prioritize:
-1. Initialize Next.js project with static export configuration
-2. Implement Solana wallet connection and blockchain interaction
-3. Create transparent developer wallet display
-4. Build community features (governance, voting, ledger viewing)
-5. Ensure all builds produce static output in `./out`
+### Completed
+- ✅ Next.js project initialized with static export configuration
+- ✅ Solana wallet connection implemented (Phantom, Solflare)
+- ✅ Transparent developer wallet display with real-time balances
+- ✅ Responsive UI with Tailwind CSS
+- ✅ GitHub Pages deployment configuration
+
+### Future Enhancements
+When extending this repository, consider:
+1. Add more wallet providers (Ledger, Torus, etc.)
+2. Implement transaction history viewing
+3. Build community features (governance, voting)
+4. Add ledger query and display features
+5. Integrate with MyXenPay token contract
+6. Add multi-language support
 
 ## Special Considerations
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Connection, clusterApiUrl } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 import Link from 'next/link';
 
 interface HealthStatus {
@@ -26,6 +26,7 @@ export default function HealthPage() {
 
   useEffect(() => {
     checkHealth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkHealth = async () => {
@@ -50,11 +51,11 @@ export default function HealthPage() {
         version: version['solana-core'],
         error: null,
       });
-    } catch (error: any) {
+    } catch (error) {
       setStatus({
         ...status,
         connected: false,
-        error: error.message || 'Failed to connect to Solana RPC',
+        error: error instanceof Error ? error.message : 'Failed to connect to Solana RPC',
       });
     } finally {
       setLoading(false);

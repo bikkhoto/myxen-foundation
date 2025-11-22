@@ -13,9 +13,12 @@ interface HealthStatus {
   error: string | null;
 }
 
+// RPC endpoint configuration
+const RPC_ENDPOINT = 'https://api.mainnet-beta.solana.com';
+
 export default function HealthPage() {
   const [status, setStatus] = useState<HealthStatus>({
-    rpc: 'https://api.mainnet-beta.solana.com',
+    rpc: RPC_ENDPOINT,
     connected: false,
     slot: null,
     blockTime: null,
@@ -26,13 +29,12 @@ export default function HealthPage() {
 
   useEffect(() => {
     checkHealth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkHealth = async () => {
     setLoading(true);
     try {
-      const connection = new Connection(status.rpc, 'confirmed');
+      const connection = new Connection(RPC_ENDPOINT, 'confirmed');
       
       // Get current slot
       const slot = await connection.getSlot();
@@ -44,7 +46,7 @@ export default function HealthPage() {
       const version = await connection.getVersion();
       
       setStatus({
-        ...status,
+        rpc: RPC_ENDPOINT,
         connected: true,
         slot,
         blockTime,
@@ -53,8 +55,11 @@ export default function HealthPage() {
       });
     } catch (error) {
       setStatus({
-        ...status,
+        rpc: RPC_ENDPOINT,
         connected: false,
+        slot: null,
+        blockTime: null,
+        version: null,
         error: error instanceof Error ? error.message : 'Failed to connect to Solana RPC',
       });
     } finally {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Connection } from '@solana/web3.js';
 import Link from 'next/link';
+import { RPC_ENDPOINT } from '@/lib/constants';
 
 interface HealthStatus {
   rpc: string;
@@ -12,9 +13,6 @@ interface HealthStatus {
   version: string | null;
   error: string | null;
 }
-
-// RPC endpoint configuration
-const RPC_ENDPOINT = 'https://api.mainnet-beta.solana.com';
 
 export default function HealthPage() {
   const [status, setStatus] = useState<HealthStatus>({

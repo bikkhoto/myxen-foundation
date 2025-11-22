@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { RPC_ENDPOINT } from '@/lib/constants';
 
 interface WalletInfo {
   name: string;
@@ -31,7 +32,7 @@ export function DeveloperWallets() {
 
   useEffect(() => {
     const fetchBalances = async () => {
-      const connection = new Connection('https://api.mainnet-beta.solana.com');
+      const connection = new Connection(RPC_ENDPOINT);
       
       const updatedWallets = await Promise.all(
         INITIAL_WALLETS.map(async (wallet) => {

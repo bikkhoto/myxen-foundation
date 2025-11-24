@@ -4,8 +4,9 @@
 
 deployment:
   tasks:
-    # Set deployment path to your public_html directory
-    - export DEPLOYPATH=$HOME/public_html
+    # Set deployment path to studyproglobal.com.bd directory
+    - export DEPLOYPATH=/home/studyproglobal.com.bd
+    - export BACKENDPATH=/home/studyproglobal.com.bd/studypro-backend
     - export NODE_ENV=production
     
     # Clean up previous deployment (optional - uncomment if needed)
@@ -60,6 +61,19 @@ deployment:
     - chmod -R 777 $DEPLOYPATH/data
     - chmod -R 777 $DEPLOYPATH/assets/qrcodes
     
+    # Deploy Backend files (if backend directory exists)
+    - echo "Deploying Backend files..."
+    - /bin/mkdir -p $BACKENDPATH
+    - if [ -d "backend" ]; then \
+        /bin/cp -R backend/* $BACKENDPATH/ ; \
+        chmod -R 755 $BACKENDPATH ; \
+        find $BACKENDPATH -type f -exec chmod 644 {} \; ; \
+        find $BACKENDPATH -type d -exec chmod 755 {} \; ; \
+        echo "Backend deployed to $BACKENDPATH" ; \
+      else \
+        echo "No backend directory found, skipping backend deployment" ; \
+      fi
+    
     - echo "✅ Deployment completed successfully!"
-    - echo "PHP Website: https://myxenpay.finance"
-    - echo "Next.js dApp: https://myxenpay.finance/dapp"
+    - echo "Frontend: /home/studyproglobal.com.bd/"
+    - echo "Backend: /home/studyproglobal.com.bd/studypro-backend/"

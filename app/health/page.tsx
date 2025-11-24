@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Connection, clusterApiUrl } from '@solana/web3.js';
+import { useEffect, useState, useCallback } from 'react';
+import { Connection } from '@solana/web3.js';
 import Link from 'next/link';
 
 interface HealthStatus {
@@ -24,11 +24,7 @@ export default function HealthPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    checkHealth();
-  }, []);
-
-  const checkHealth = async () => {
+  const checkHealth = useCallback(async () => {
     setLoading(true);
     try {
       const connection = new Connection(status.rpc, 'confirmed');
@@ -42,24 +38,29 @@ export default function HealthPage() {
       // Get version
       const version = await connection.getVersion();
       
-      setStatus({
-        ...status,
+      setStatus(prevStatus => ({
+        ...prevStatus,
         connected: true,
         slot,
         blockTime,
         version: version['solana-core'],
         error: null,
-      });
-    } catch (error: any) {
-      setStatus({
-        ...status,
+      }));
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to connect to Solana RPC';
+      setStatus(prevStatus => ({
+        ...prevStatus,
         connected: false,
-        error: error.message || 'Failed to connect to Solana RPC',
-      });
+        error: errorMessage,
+      }));
     } finally {
       setLoading(false);
     }
-  };
+  }, [status.rpc]);
+
+  useEffect(() => {
+    checkHealth();
+  }, [checkHealth]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-black text-white p-8">

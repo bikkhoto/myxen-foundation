@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Ignore legacy PHP application
+    "myxen foundation/**",
+    // Ignore zip files and binaries
+    "*.zip",
+    "*.docx",
   ]),
 ]);
 

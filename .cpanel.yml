@@ -6,7 +6,6 @@ deployment:
   tasks:
     # Set deployment path to public_html directory
     - export DEPLOYPATH=/home/myxenpay/public_html
-    - export BACKENDPATH=/home/myxenpay/studypro-backend
     - export NODE_ENV=production
     
     # Clean up previous deployment (optional - uncomment if needed)
@@ -62,19 +61,7 @@ deployment:
     - chmod -R 777 $DEPLOYPATH/data
     - chmod -R 777 $DEPLOYPATH/assets/qrcodes
     
-    # Deploy Backend files (if backend directory exists)
-    - echo "Deploying Backend files..."
-    - /bin/mkdir -p $BACKENDPATH
-    - if [ -d "backend" ]; then \
-        /bin/cp -R backend/* $BACKENDPATH/ ; \
-        chmod -R 755 $BACKENDPATH ; \
-        find $BACKENDPATH -type f -exec chmod 644 {} \; ; \
-        find $BACKENDPATH -type d -exec chmod 755 {} \; ; \
-        echo "Backend deployed to $BACKENDPATH" ; \
-      else \
-        echo "No backend directory found, skipping backend deployment" ; \
-      fi
-    
+
     # Deploy Subdomains
     - echo "Deploying Subdomains..."
     # Subdomains are already created in cPanel as subdomain.myxenpay.finance
@@ -108,6 +95,5 @@ deployment:
     
     - echo "✅ Deployment completed successfully!"
     - echo "Main Site: /home/myxenpay/public_html/ (myxenpay.finance)"
-    - echo "Backend API: /home/myxenpay/studypro-backend/"
     - echo "Next.js DApp: /home/myxenpay/public_html/dapp/"
     - echo "Subdomains: admin, work, career, claim, blog, wallets, payments, store, meme, locker, university, remit, payroll, students, life, agent, api"

@@ -39,7 +39,7 @@ jobs:
       
       - name: Deploy to cPanel via FTP
         # Only run if the FTP password secret is available
-        if: ${{ secrets.CPANEL_FTP_PASSWORD != '' }}
+        if: ${{ secrets.CPANEL_FTP_PASSWORD }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: myxenpay.finance
@@ -57,7 +57,7 @@ jobs:
       
       - name: FTP Secret Not Configured
         # Show a message if the FTP password is not configured
-        if: ${{ secrets.CPANEL_FTP_PASSWORD == '' }}
+        if: ${{ !secrets.CPANEL_FTP_PASSWORD }}
         run: |
           echo "⚠️ CPANEL_FTP_PASSWORD secret is not configured."
           echo "To enable FTP deployment to cPanel, add the CPANEL_FTP_PASSWORD secret in repository settings."

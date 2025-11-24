@@ -221,7 +221,7 @@ export default function UniversityAdminDashboard() {
                   ].map((tab) => (
                     <button
                       key={tab.id}
-                      onClick={() => setActiveTab(tab.id as any)}
+                      onClick={() => setActiveTab(tab.id as typeof activeTab)}
                       className={`px-6 py-4 font-semibold transition-colors ${
                         activeTab === tab.id
                           ? 'text-blue-600 border-b-2 border-blue-600'
@@ -416,7 +416,7 @@ export default function UniversityAdminDashboard() {
                         <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6">
                           <h4 className="font-bold text-lg mb-3 text-gray-900 dark:text-white">Your Revenue Share</h4>
                           <div className="text-4xl font-bold text-green-600 mb-2">${universityData.revenueGenerated.toLocaleString()}</div>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">This month's earnings from transaction fees</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">This month&apos;s earnings from transaction fees</p>
                         </div>
 
                         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">

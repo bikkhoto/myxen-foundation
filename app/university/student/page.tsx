@@ -92,7 +92,7 @@ export default function StudentPortal() {
                   Enter Verification Code
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  We've sent a 6-digit code to {email}
+                  We&apos;ve sent a 6-digit code to {email}
                 </p>
                 <form onSubmit={handleVerificationSubmit}>
                   <input

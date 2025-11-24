@@ -27,10 +27,10 @@ eval "$(ssh-agent -s)"  # ✅ FIXED - correct command substitution
 
 **Impact**: Files were deployed to wrong directories, making the website inaccessible.
 
-**Fix**: Updated all paths to use `/home/studyproglobal.com.bd/public_html` which is the standard cPanel web root:
-- Main Site: `/home/studyproglobal.com.bd/public_html/`
-- Backend: `/home/studyproglobal.com.bd/public_html/studypro-backend/`
-- DApp: `/home/studyproglobal.com.bd/public_html/dapp/`
+**Fix**: Updated all paths to use `/home/myxenpay/public_html` which is the standard cPanel web root:
+- Main Site: `/home/myxenpay/public_html/`
+- Backend: `/home/myxenpay/public_html/admin/` (via subdomain admin.myxenpay.finance)
+- DApp: `/home/myxenpay/public_html/dapp/`
 
 ### 3. Subdomain Deployment Issues
 **Issue**: Subdomain directories were not being created before copying files, causing copy operations to fail.
@@ -84,11 +84,15 @@ This repository supports two deployment methods:
 ## What You Need to Do
 
 ### Step 1: Verify Your cPanel Username
-The configuration assumes your cPanel username is `studyproglobal.com.bd`.
+The configuration is set up for:
+- **Server**: `server10.cloudswebserver.com`
+- **Username**: `myxenpay`
+- **Database**: `myxenpay__myxn`
+- **DB User**: `myxenpay_admin`
 
 To verify:
-1. Log into cPanel
-2. Check the home directory (should be `/home/studyproglobal.com.bd`)
+1. Log into cPanel at server10.cloudswebserver.com
+2. Check the home directory (should be `/home/myxenpay`)
 3. If different, update the paths in `.cpanel.yml`
 
 ### Step 2: Verify Public HTML Path
@@ -96,8 +100,8 @@ Most cPanel accounts use `/home/username/public_html` as the web root.
 
 To verify via SSH:
 ```bash
-ssh your-username@your-server.com
-pwd  # Should show /home/studyproglobal.com.bd
+ssh myxenpay@server10.cloudswebserver.com
+pwd  # Should show /home/myxenpay
 ls -la public_html/  # Should show your website files
 ```
 
@@ -105,33 +109,33 @@ ls -la public_html/  # Should show your website files
 Before deployment, ensure all 19 subdomains are created in cPanel:
 
 Required subdomains:
-- admin.yourdomain.com
-- work.yourdomain.com
-- career.yourdomain.com
-- claim.yourdomain.com
-- blog.yourdomain.com
-- wallet.yourdomain.com
-- payments.yourdomain.com
-- store.yourdomain.com
-- meme.yourdomain.com
-- locker.yourdomain.com
-- university.yourdomain.com
-- remit.yourdomain.com
-- payroll.yourdomain.com
-- student.yourdomain.com
-- merchant.yourdomain.com
-- life.yourdomain.com
-- agent.yourdomain.com
-- api-gateway.yourdomain.com
-- docker.yourdomain.com
+- admin.myxenpay.finance
+- work.myxenpay.finance
+- career.myxenpay.finance
+- claim.myxenpay.finance
+- blog.myxenpay.finance
+- wallets.myxenpay.finance
+- payments.myxenpay.finance
+- store.myxenpay.finance
+- meme.myxenpay.finance
+- locker.myxenpay.finance
+- university.myxenpay.finance
+- remit.myxenpay.finance
+- payroll.myxenpay.finance
+- students.myxenpay.finance
+- merchant.myxenpay.finance
+- life.myxenpay.finance
+- agent.myxenpay.finance
+- api.myxenpay.finance
+- docker.myxenpay.finance
 
 ### Step 4: Configure GitHub Secrets (for SSH deployment)
 If using GitHub Actions SSH deployment, configure these secrets:
-- `SSH_HOST`: Your server hostname
+- `SSH_HOST`: `server10.cloudswebserver.com`
 - `SSH_PORT`: SSH port (usually 22)
-- `SSH_USER`: Your cPanel username
+- `SSH_USER`: `myxenpay`
 - `SSH_PRIVATE_KEY`: Your SSH private key
-- `SSH_TARGET_PATH`: `/home/studyproglobal.com.bd/public_html`
+- `SSH_TARGET_PATH`: `/home/myxenpay/public_html`
 - `SSH_PASSPHRASE`: SSH key passphrase (if applicable)
 
 ### Step 5: Test Deployment
@@ -148,23 +152,23 @@ Monitor deployment:
 
 ### Step 6: Verify Deployment Success
 After deployment, check:
-- ✅ Main site: `https://yourdomain.com`
-- ✅ DApp: `https://yourdomain.com/dapp`
-- ✅ Backend API: `https://yourdomain.com/studypro-backend`
-- ✅ Admin subdomain: `https://admin.yourdomain.com`
+- ✅ Main site: `https://myxenpay.finance`
+- ✅ DApp: `https://myxenpay.finance/dapp`
+- ✅ Backend API: `https://admin.myxenpay.finance`
+- ✅ Admin subdomain: `https://admin.myxenpay.finance`
 - ✅ Other subdomains as needed
 
 ## Troubleshooting
 
 ### "Permission denied" Errors
 ```bash
-chmod -R 755 /home/studyproglobal.com.bd/public_html
-find /home/studyproglobal.com.bd/public_html -type f -exec chmod 644 {} \;
+chmod -R 755 /home/myxenpay/public_html
+find /home/myxenpay/public_html -type f -exec chmod 644 {} \;
 ```
 
 ### "Directory not found" Errors
 - Verify the paths in `.cpanel.yml` match your actual cPanel structure
-- Check if `public_html` exists: `ls -la /home/studyproglobal.com.bd/`
+- Check if `public_html` exists: `ls -la /home/myxenpay/`
 - Subdomain paths might need adjustment based on your cPanel configuration
 
 ### "npm not found" Messages
@@ -205,7 +209,10 @@ The deployment configuration should now work correctly. If you still experience 
 
 **Configuration Status**: ✅ READY FOR DEPLOYMENT
 
-If you need to customize the paths for your specific cPanel configuration, please provide:
-- Your cPanel username
-- Your public_html path (run `pwd` in your web root)
-- Your subdomain document roots (check in cPanel → Domains → Subdomains)
+**Current Configuration:**
+- Server: server10.cloudswebserver.com
+- Username: myxenpay
+- Main Site: /home/myxenpay/public_html/
+- DApp: /home/myxenpay/public_html/dapp/
+- Subdomains: /home/myxenpay/{subdomain}.myxenpay.finance/
+- Database: myxenpay__myxn (User: myxenpay_admin)

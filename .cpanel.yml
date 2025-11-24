@@ -4,9 +4,8 @@
 
 deployment:
   tasks:
-    # Set deployment path to studyproglobal.com.bd directory
-    - export DEPLOYPATH=/home/studyproglobal.com.bd
-    - export BACKENDPATH=/home/studyproglobal.com.bd/studypro-backend
+    # Set deployment path to public_html directory
+    - export DEPLOYPATH=/home/myxenpay/public_html
     - export NODE_ENV=production
     
     # Clean up previous deployment (optional - uncomment if needed)
@@ -62,50 +61,39 @@ deployment:
     - chmod -R 777 $DEPLOYPATH/data
     - chmod -R 777 $DEPLOYPATH/assets/qrcodes
     
-    # Deploy Backend files (if backend directory exists)
-    - echo "Deploying Backend files..."
-    - /bin/mkdir -p $BACKENDPATH
-    - if [ -d "backend" ]; then \
-        /bin/cp -R backend/* $BACKENDPATH/ ; \
-        chmod -R 755 $BACKENDPATH ; \
-        find $BACKENDPATH -type f -exec chmod 644 {} \; ; \
-        find $BACKENDPATH -type d -exec chmod 755 {} \; ; \
-        echo "Backend deployed to $BACKENDPATH" ; \
-      else \
-        echo "No backend directory found, skipping backend deployment" ; \
-      fi
-    
+
     # Deploy Subdomains
     - echo "Deploying Subdomains..."
-    - export SUBDOMAINSPATH=/home/studyproglobal.com.bd
+    # Subdomains are already created in cPanel as subdomain.myxenpay.finance
+    # Located at /home/myxenpay/subdomain.myxenpay.finance/
+    - export SUBDOMAINSPATH=/home/myxenpay
     
-    # Copy all subdomain directories
-    - /bin/cp -R subdomains/admin $SUBDOMAINSPATH/admin 2>/dev/null || echo "Admin subdomain copied"
-    - /bin/cp -R subdomains/work $SUBDOMAINSPATH/work 2>/dev/null || echo "Work subdomain copied"
-    - /bin/cp -R subdomains/career $SUBDOMAINSPATH/career 2>/dev/null || echo "Career subdomain copied"
-    - /bin/cp -R subdomains/claim $SUBDOMAINSPATH/claim 2>/dev/null || echo "Claim subdomain copied"
-    - /bin/cp -R subdomains/blog $SUBDOMAINSPATH/blog 2>/dev/null || echo "Blog subdomain copied"
-    - /bin/cp -R subdomains/wallet $SUBDOMAINSPATH/wallet 2>/dev/null || echo "Wallet subdomain copied"
-    - /bin/cp -R subdomains/payments $SUBDOMAINSPATH/payments 2>/dev/null || echo "Payments subdomain copied"
-    - /bin/cp -R subdomains/store $SUBDOMAINSPATH/store 2>/dev/null || echo "Store subdomain copied"
-    - /bin/cp -R subdomains/meme $SUBDOMAINSPATH/meme 2>/dev/null || echo "Meme subdomain copied"
-    - /bin/cp -R subdomains/locker $SUBDOMAINSPATH/locker 2>/dev/null || echo "Locker subdomain copied"
-    - /bin/cp -R subdomains/university $SUBDOMAINSPATH/university 2>/dev/null || echo "University subdomain copied"
-    - /bin/cp -R subdomains/remit $SUBDOMAINSPATH/remit 2>/dev/null || echo "Remit subdomain copied"
-    - /bin/cp -R subdomains/payroll $SUBDOMAINSPATH/payroll 2>/dev/null || echo "Payroll subdomain copied"
-    - /bin/cp -R subdomains/student $SUBDOMAINSPATH/student 2>/dev/null || echo "Student subdomain copied"
-    - /bin/cp -R subdomains/merchant $SUBDOMAINSPATH/merchant 2>/dev/null || echo "Merchant subdomain copied"
-    - /bin/cp -R subdomains/life $SUBDOMAINSPATH/life 2>/dev/null || echo "Life subdomain copied"
-    - /bin/cp -R subdomains/agent $SUBDOMAINSPATH/agent 2>/dev/null || echo "Agent subdomain copied"
-    - /bin/cp -R subdomains/api-gateway $SUBDOMAINSPATH/api-gateway 2>/dev/null || echo "API Gateway subdomain copied"
-    - /bin/cp -R subdomains/docker $SUBDOMAINSPATH/docker 2>/dev/null || echo "Docker subdomain copied"
+    # Copy all subdomain directories to their respective cPanel subdomain paths
+    - /bin/cp -R subdomains/admin/* $SUBDOMAINSPATH/admin.myxenpay.finance/ 2>/dev/null || echo "Admin subdomain copied"
+    - /bin/cp -R subdomains/work/* $SUBDOMAINSPATH/work.myxenpay.finance/ 2>/dev/null || echo "Work subdomain copied"
+    - /bin/cp -R subdomains/career/* $SUBDOMAINSPATH/career.myxenpay.finance/ 2>/dev/null || echo "Career subdomain copied"
+    - /bin/cp -R subdomains/claim/* $SUBDOMAINSPATH/claim.myxenpay.finance/ 2>/dev/null || echo "Claim subdomain copied"
+    - /bin/cp -R subdomains/blog/* $SUBDOMAINSPATH/blog.myxenpay.finance/ 2>/dev/null || echo "Blog subdomain copied"
+    - /bin/cp -R subdomains/wallet/* $SUBDOMAINSPATH/wallets.myxenpay.finance/ 2>/dev/null || echo "Wallet subdomain copied"
+    - /bin/cp -R subdomains/payments/* $SUBDOMAINSPATH/payments.myxenpay.finance/ 2>/dev/null || echo "Payments subdomain copied"
+    - /bin/cp -R subdomains/store/* $SUBDOMAINSPATH/store.myxenpay.finance/ 2>/dev/null || echo "Store subdomain copied"
+    - /bin/cp -R subdomains/meme/* $SUBDOMAINSPATH/meme.myxenpay.finance/ 2>/dev/null || echo "Meme subdomain copied"
+    - /bin/cp -R subdomains/locker/* $SUBDOMAINSPATH/locker.myxenpay.finance/ 2>/dev/null || echo "Locker subdomain copied"
+    - /bin/cp -R subdomains/university/* $SUBDOMAINSPATH/university.myxenpay.finance/ 2>/dev/null || echo "University subdomain copied"
+    - /bin/cp -R subdomains/remit/* $SUBDOMAINSPATH/remit.myxenpay.finance/ 2>/dev/null || echo "Remit subdomain copied"
+    - /bin/cp -R subdomains/payroll/* $SUBDOMAINSPATH/payroll.myxenpay.finance/ 2>/dev/null || echo "Payroll subdomain copied"
+    - /bin/cp -R subdomains/student/* $SUBDOMAINSPATH/students.myxenpay.finance/ 2>/dev/null || echo "Student subdomain copied"
+    - /bin/cp -R subdomains/merchant/* $SUBDOMAINSPATH/merchant.myxenpay.finance/ 2>/dev/null || echo "Merchant subdomain copied (if exists)"
+    - /bin/cp -R subdomains/life/* $SUBDOMAINSPATH/life.myxenpay.finance/ 2>/dev/null || echo "Life subdomain copied"
+    - /bin/cp -R subdomains/agent/* $SUBDOMAINSPATH/agent.myxenpay.finance/ 2>/dev/null || echo "Agent subdomain copied"
+    - /bin/cp -R subdomains/api-gateway/* $SUBDOMAINSPATH/api.myxenpay.finance/ 2>/dev/null || echo "API Gateway subdomain copied"
+    - /bin/cp -R subdomains/docker/* $SUBDOMAINSPATH/docker.myxenpay.finance/ 2>/dev/null || echo "Docker subdomain copied (if exists)"
     
     # Set permissions for all subdomains
-    - chmod -R 755 $SUBDOMAINSPATH/admin $SUBDOMAINSPATH/work $SUBDOMAINSPATH/career $SUBDOMAINSPATH/claim $SUBDOMAINSPATH/blog $SUBDOMAINSPATH/wallet $SUBDOMAINSPATH/payments $SUBDOMAINSPATH/store $SUBDOMAINSPATH/meme $SUBDOMAINSPATH/locker $SUBDOMAINSPATH/university $SUBDOMAINSPATH/remit $SUBDOMAINSPATH/payroll $SUBDOMAINSPATH/student $SUBDOMAINSPATH/merchant $SUBDOMAINSPATH/life $SUBDOMAINSPATH/agent $SUBDOMAINSPATH/api-gateway $SUBDOMAINSPATH/docker 2>/dev/null || echo "Permissions set for subdomains"
+    - find $SUBDOMAINSPATH -maxdepth 1 -type d \( -name "*.myxenpay.finance" \) -exec chmod -R 755 {} \; 2>/dev/null || echo "Permissions set for subdomains"
     - echo "✅ Subdomains deployed successfully!"
     
     - echo "✅ Deployment completed successfully!"
-    - echo "Main Site: /home/studyproglobal.com.bd/ (public_html)"
-    - echo "Backend API: /home/studyproglobal.com.bd/studypro-backend/"
-    - echo "Next.js DApp: /home/studyproglobal.com.bd/dapp/"
-    - echo "Subdomains: admin, work, career, claim, blog, wallet, payments, store, meme, locker, university, remit, payroll, student, merchant, life, agent, api-gateway, docker"
+    - echo "Main Site: /home/myxenpay/public_html/ (myxenpay.finance)"
+    - echo "Next.js DApp: /home/myxenpay/public_html/dapp/"
+    - echo "Subdomains: admin, work, career, claim, blog, wallets, payments, store, meme, locker, university, remit, payroll, students, life, agent, api"

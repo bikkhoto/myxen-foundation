@@ -29,12 +29,25 @@ Organized microservices architecture with 16+ subdomains:
 - **student** - Student rewards
 - And more... (see `subdomains/README.md`)
 
-### 3. **myxenpay-dapp/** - Next.js DApp Frontend
-Modern decentralized application interface
+### 3. **Next.js Application** - Modern DApp & University Platform
+Full-featured decentralized application with multiple platforms:
+
+**Main DApp** (root `/`)
 - Token presale interface
 - Wallet connection (Phantom, Solflare)
 - Blockchain transaction display
+- Developer wallet transparency
 - Responsive design with Tailwind CSS
+
+**University Platform** (`/university`)
+- 🎓 **MyXen.University** - Campus payment & engagement platform
+- Multi-tenant university management system
+- Student rewards with 5% cashback (up to $500/month)
+- Merchant payment processing with QR codes
+- University admin dashboard with analytics
+- CEO oversight and approval system
+- Branded token creation service
+- See `UNIVERSITY_PLATFORM.md` for complete documentation
 
 ## 🚀 Quick Start
 
@@ -55,12 +68,19 @@ cp .env.example .env  # Configure your database
 php -S localhost:8000
 ```
 
-**Next.js dApp:**
+**Next.js Application:**
 ```bash
-cd myxenpay-dapp
 npm install
 npm run dev  # Runs on http://localhost:3000
 ```
+
+Visit:
+- Main DApp: `http://localhost:3000`
+- University Portal: `http://localhost:3000/university`
+- Student Portal: `http://localhost:3000/university/student`
+- Merchant Dashboard: `http://localhost:3000/university/merchant`
+- Admin Dashboard: `http://localhost:3000/university/admin`
+- CEO Dashboard: `http://localhost:3000/university/ceo`
 
 ## 📦 Deployment
 
@@ -160,12 +180,27 @@ See `myxen core.png` for the complete ecosystem architecture diagram.
 
 ## 📖 Documentation
 
-Comprehensive documentation in `myxenpay-dapp/docs/`:
+### Main Documentation
+- **README.md** - This file, repository overview
+- **SECURITY.md** - Security practices and policies
+- **LICENSE** - MIT License terms
+
+### University Platform Documentation
+- **UNIVERSITY_PLATFORM.md** - Complete platform guide with workflows
+- **UNIVERSITY_API_SPEC.md** - Backend API specification (v1)
+- **UNIVERSITY_DEPLOYMENT.md** - Deployment and hosting guide
+
+### Legacy Documentation (myxenpay-dapp/)
 - **WHITEPAPER.md** - Technical specifications
 - **TOKENOMICS.md** - Token economics
 - **CPANEL_DEPLOYMENT.md** - Deployment guide
 - **SOLANA_SETUP.md** - Blockchain setup
-- **SECURITY.md** - Security practices
+
+### Subdomain Documentation
+- **CPANEL_SUBDOMAIN_SETUP.md** - cPanel subdomain configuration
+- **SUBDOMAIN_DEPLOYMENT_SUMMARY.md** - Subdomain architecture overview
+- **CLEANUP_GUIDE.md** - Post-deployment cleanup
+- **subdomains/README.md** - Technical subdomain docs
 
 ## 🔐 Security
 
@@ -198,9 +233,15 @@ MIT License - See LICENSE file for details
 
 ## 🔗 Links
 
-- **Website**: https://myxenpay.finance
-- **DApp**: https://myxenpay.finance/dapp
-- **Documentation**: `myxenpay-dapp/docs/`
+### Live Platforms
+- **Main Website**: https://myxenpay.finance
+- **DApp**: https://myxenpay.finance (root)
+- **University Portal**: https://myxenpay.finance/university (when deployed)
+
+### Documentation
+- **Platform Guide**: See `UNIVERSITY_PLATFORM.md`
+- **API Specification**: See `UNIVERSITY_API_SPEC.md`
+- **Deployment Guide**: See `UNIVERSITY_DEPLOYMENT.md`
 - **Architecture Diagram**: See `myxen core.png`
 - **System Design**: See `Myxenpay Core.docx`
 

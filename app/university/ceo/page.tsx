@@ -43,8 +43,13 @@ export default function CEODashboard() {
   ];
 
   const handleApproval = (universityId: number, approved: boolean) => {
-    console.log(`University ${universityId} ${approved ? 'approved' : 'rejected'}`);
-    // Implementation would update the status
+    // TODO: Implement API call to approve/reject university
+    // This would typically make an API call and update the state
+    alert(`University ${universityId} ${approved ? 'approved' : 'rejected'}. API integration pending.`);
+    // In production, this would:
+    // 1. Call API: PUT /universities/:id/approve
+    // 2. Update local state to remove from pending
+    // 3. Show success notification
   };
 
   return (

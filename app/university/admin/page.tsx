@@ -10,6 +10,7 @@ type SubscriptionPlan = 'standard' | 'enterprise' | 'platinum';
 export default function UniversityAdminDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'analytics' | 'token' | 'revenue'>('overview');
   const [showRegistration, setShowRegistration] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Mock university data
   const universityData = {
@@ -67,13 +68,24 @@ export default function UniversityAdminDashboard() {
                 <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
                   University Registration
                 </h2>
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={(e) => {
+                  e.preventDefault();
+                  setIsSubmitting(true);
+                  // TODO: Implement API call to submit registration
+                  // Simulate API call
+                  setTimeout(() => {
+                    setIsSubmitting(false);
+                    alert('Registration submitted successfully! Awaiting CEO approval.');
+                    setShowRegistration(false);
+                  }, 1500);
+                }}>
                   <div>
                     <label className="block text-sm font-semibold mb-2 text-gray-900 dark:text-white">
                       University Name
                     </label>
                     <input
                       type="text"
+                      required
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                       placeholder="Enter university name"
                     />
@@ -86,6 +98,7 @@ export default function UniversityAdminDashboard() {
                       </label>
                       <input
                         type="text"
+                        required
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                         placeholder="Full name"
                       />
@@ -96,6 +109,7 @@ export default function UniversityAdminDashboard() {
                       </label>
                       <input
                         type="email"
+                        required
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                         placeholder="email@university.edu"
                       />
@@ -108,6 +122,8 @@ export default function UniversityAdminDashboard() {
                     </label>
                     <input
                       type="number"
+                      required
+                      min="1"
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                       placeholder="Total enrolled students"
                     />
@@ -136,9 +152,10 @@ export default function UniversityAdminDashboard() {
                   <div className="flex gap-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                      disabled={isSubmitting}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                     >
-                      Submit Application
+                      {isSubmitting ? 'Submitting...' : 'Submit Application'}
                     </button>
                     <button
                       type="button"

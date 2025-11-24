@@ -6,8 +6,6 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function StudentPortal() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [step, setStep] = useState<'email' | 'verify' | 'dashboard'>('email');
@@ -24,14 +22,15 @@ export default function StudentPortal() {
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate sending verification code
+    // TODO: Implement API call to send verification code
+    // For now, simulate sending verification code
     setStep('verify');
   };
 
   const handleVerificationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate verification success
-    setIsVerified(true);
+    // TODO: Implement API call to verify code
+    // For now, simulate verification success
     setStep('dashboard');
   };
 

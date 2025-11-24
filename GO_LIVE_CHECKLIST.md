@@ -4,15 +4,12 @@
 
 ### GitHub Repository
 - [x] `.cpanel.yml` configured for automatic deployment
-- [x] `.github/workflows/cpanel-deploy.yml` configured for FTP deployment
-- [x] GitHub Secret `CPANEL_FTP_PASSWORD` added (verify at: Settings → Secrets → Actions)
 - [x] Root Next.js app builds successfully (`npm run build`)
 - [x] PHP site files in `myxen foundation/` directory
 
 ### cPanel Configuration
 - [ ] Git Version Control set up and linked to GitHub repo
-- [ ] FTP account `myxenpay` active and accessible
-- [ ] Node.js selector configured (if building on server)
+- [ ] Node.js selector configured (optional, for building on server)
 - [ ] PHP version 7.4+ selected
 - [ ] MySQL database created and credentials in `.env`
 - [ ] Composer available (optional, improves PHP dependency management)
@@ -24,7 +21,7 @@
 
 ## Deployment Steps
 
-### Option 1: cPanel Git Deploy (Recommended)
+### cPanel Git Deploy
 ```bash
 # In cPanel Git Version Control:
 1. Click "Manage" on your repository
@@ -33,12 +30,14 @@
 4. Verify logs show successful build
 ```
 
-### Option 2: GitHub Actions FTP
+**To push updates:**
 ```bash
-# Automatically triggers on push to main
+# Make changes and push to GitHub
+git add .
+git commit -m "Your changes"
 git push origin main
 
-# Monitor at: https://github.com/bikkhoto/myxen-foundation/actions
+# Then deploy via cPanel Git Version Control interface
 ```
 
 ## Post-Deployment Validation
@@ -128,10 +127,10 @@ npx serve out
 ```
 
 ### Deployment Fails
-- Check GitHub Actions logs
-- Verify FTP credentials
+- Check cPanel Git Version Control deployment logs
 - Ensure cPanel has disk space
 - Check Node.js/npm availability on server
+- Verify file permissions in deployment directory
 
 ## Go-Live Final Steps
 

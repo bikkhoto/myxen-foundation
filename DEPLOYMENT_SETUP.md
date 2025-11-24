@@ -13,7 +13,7 @@ Your repository is configured to automatically deploy to your cPanel server usin
 3. Click **Create** to add a new repository
 4. Configure the repository:
    - **Clone URL**: `https://github.com/bikkhoto/myxen-foundation.git`
-   - **Repository Path**: `/home/studyproglobal.com.bd` (or your domain path)
+   - **Repository Path**: `/home/yourdomain.com` (replace with your actual domain path)
    - **Repository Name**: `myxen-foundation`
    - **Branch**: `main`
 5. Click **Create**
@@ -35,14 +35,14 @@ To deploy your application:
 ## 🎯 Deployment Details
 
 **What Gets Deployed:**
-- PHP Website → `/home/studyproglobal.com.bd/` (root directory)
-- Next.js DApp → `/home/studyproglobal.com.bd/dapp/` (subdirectory)
-- Backend → `/home/studyproglobal.com.bd/studypro-backend/`
+- PHP Website → `/home/yourdomain.com/` (root directory)
+- Next.js DApp → `/home/yourdomain.com/dapp/` (subdirectory)
+- Backend → `/home/yourdomain.com/studypro-backend/`
 - Subdomains → Various subdomain directories
 
 **Live URLs:**
-- Main Site: https://studyproglobal.com.bd (or your domain)
-- DApp: https://studyproglobal.com.bd/dapp
+- Main Site: https://yourdomain.com (replace with your actual domain)
+- DApp: https://yourdomain.com/dapp
 
 ## 🔄 How to Deploy Changes
 

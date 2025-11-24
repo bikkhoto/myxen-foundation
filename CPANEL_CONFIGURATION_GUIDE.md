@@ -25,12 +25,12 @@ This syntax error prevented the SSH agent from starting correctly, causing deplo
 
 **Previous Path Structure**:
 ```yaml
-- export DEPLOYPATH=/home/studyproglobal.com.bd
+- export DEPLOYPATH=/home/username
 ```
 
 **Updated Path Structure**:
 ```yaml
-- export DEPLOYPATH=/home/studyproglobal.com.bd/public_html
+- export DEPLOYPATH=/home/username/public_html
 ```
 
 ## Understanding cPanel Directory Structure
@@ -53,11 +53,14 @@ In cPanel hosting, the typical directory structure is:
 ### Your Current Configuration
 
 The `.cpanel.yml` is configured for:
-- **Username**: `studyproglobal.com.bd`
-- **Main Site**: `/home/studyproglobal.com.bd/public_html/`
-- **Backend**: `/home/studyproglobal.com.bd/public_html/studypro-backend/`
-- **Next.js DApp**: `/home/studyproglobal.com.bd/public_html/dapp/`
-- **Subdomains**: `/home/studyproglobal.com.bd/subdomain-name/`
+- **Server**: `server10.cloudswebserver.com`
+- **Username**: `myxenpay`
+- **Main Site**: `/home/myxenpay/public_html/`
+- **Backend**: `/home/myxenpay/public_html/admin/` (not created yet)
+- **Next.js DApp**: `/home/myxenpay/public_html/dapp/`
+- **Subdomains**: `/home/myxenpay/{subdomain}.myxenpay.finance/`
+- **Database**: `myxenpay__myxn`
+- **DB User**: `myxenpay_admin`
 
 ## How to Customize Deployment Paths
 
@@ -82,9 +85,8 @@ Edit the deployment paths in `.cpanel.yml`:
 ```yaml
 deployment:
   tasks:
-    # Replace 'studyproglobal.com.bd' with your actual cPanel username
+    # Replace 'myxenpay' with your actual cPanel username if different
     - export DEPLOYPATH=/home/YOUR_USERNAME/public_html
-    - export BACKENDPATH=/home/YOUR_USERNAME/public_html/studypro-backend
     - export NODE_ENV=production
 ```
 
@@ -134,16 +136,16 @@ Two common subdomain configurations:
 
 1. In cPanel, go to "Git Version Control"
 2. Create a new repository:
-   - Repository Path: `/home/username/myxen-foundation`
+   - Repository Path: `/home/myxenpay/myxen-foundation`
    - Repository URL: `https://github.com/bikkhoto/myxen-foundation.git`
    - Branch: `main`
 
 3. The `.cpanel.yml` file will automatically run on deployment
 
 4. After deployment, visit:
-   - Main site: `https://yourdomain.com`
-   - DApp: `https://yourdomain.com/dapp`
-   - Backend: `https://yourdomain.com/studypro-backend`
+   - Main site: `https://myxenpay.finance`
+   - DApp: `https://myxenpay.finance/dapp`
+   - Backend: `https://admin.myxenpay.finance`
 
 ### Method 2: SSH Deployment (GitHub Actions)
 
@@ -162,8 +164,8 @@ Two common subdomain configurations:
 ### Issue: "Permission denied"
 **Solution**: 
 ```bash
-chmod -R 755 /home/username/public_html
-find /home/username/public_html -type f -exec chmod 644 {} \;
+chmod -R 755 /home/myxenpay/public_html
+find /home/myxenpay/public_html -type f -exec chmod 644 {} \;
 ```
 
 ### Issue: "npm not found on server"
@@ -181,9 +183,9 @@ find /home/username/public_html -type f -exec chmod 644 {} \;
 
 ### Issue: "Backend API not working"
 **Solution**:
-1. Verify `BACKENDPATH` points to correct directory
+1. Verify admin subdomain is properly configured in cPanel
 2. Check PHP version requirements (7.4+)
-3. Run `composer install` in backend directory
+3. Run `composer install` in the main directory
 4. Set proper permissions for data directories
 
 ## Testing Your Configuration
@@ -191,12 +193,12 @@ find /home/username/public_html -type f -exec chmod 644 {} \;
 ### 1. Test Paths Locally
 ```bash
 # SSH into your server
-ssh your-username@your-server.com
+ssh myxenpay@server10.cloudswebserver.com
 
 # Verify paths exist
-ls -la /home/studyproglobal.com.bd/public_html
-ls -la /home/studyproglobal.com.bd/admin
-ls -la /home/studyproglobal.com.bd/work
+ls -la /home/myxenpay/public_html
+ls -la /home/myxenpay/admin.myxenpay.finance
+ls -la /home/myxenpay/work.myxenpay.finance
 ```
 
 ### 2. Test Deployment
@@ -209,9 +211,9 @@ git push origin main
 
 ### 3. Verify Deployment
 Check these URLs:
-- Main site: `https://yourdomain.com`
-- DApp: `https://yourdomain.com/dapp`
-- Admin subdomain: `https://admin.yourdomain.com`
+- Main site: `https://myxenpay.finance`
+- DApp: `https://myxenpay.finance/dapp`
+- Admin subdomain: `https://admin.myxenpay.finance`
 
 ## Additional Configuration
 

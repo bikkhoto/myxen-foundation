@@ -11,22 +11,25 @@ interface WalletInfo {
 }
 
 export function DeveloperWallets() {
+  // Note: These are placeholder wallet addresses for demonstration purposes.
+  // Replace with actual Solana wallet addresses in production.
+  // Valid Solana addresses are base58 encoded and typically 32-44 characters.
   const [wallets, setWallets] = useState<WalletInfo[]>([
     {
       name: 'Development Fund',
-      address: '11111111111111111111111111111111',
+      address: '11111111111111111111111111111111', // Placeholder - replace with actual address
       balance: null,
       loading: true,
     },
     {
       name: 'Community Treasury',
-      address: '11111111111111111111111111111112',
+      address: '11111111111111111111111111111112', // Placeholder - replace with actual address
       balance: null,
       loading: true,
     },
     {
       name: 'Marketing & Growth',
-      address: '11111111111111111111111111111113',
+      address: '11111111111111111111111111111113', // Placeholder - replace with actual address
       balance: null,
       loading: true,
     },

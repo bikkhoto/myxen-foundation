@@ -16,41 +16,42 @@ deployment:
     - /bin/mkdir -p $DEPLOYPATH
     
     # Deploy PHP website (myxen foundation)
-    - echo "Deploying PHP website..."
-    - /bin/cp -R "myxen foundation"/.htaccess $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.php $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.html $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.css $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.js $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.json $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.txt $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/*.xml $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/admin $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/api $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/assets $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/core $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/data $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/includes $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/modules $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/vendor $DEPLOYPATH/
-    - /bin/cp -R "myxen foundation"/.well-known $DEPLOYPATH/
-    
-    # Install PHP Composer dependencies
-    - echo "Installing PHP dependencies..."
-    - cd $DEPLOYPATH
-    - /usr/local/bin/composer install --no-dev --optimize-autoloader 2>/dev/null || echo "Composer not available or already installed"
+    - echo "Deploying PHP website to public_html..."
+    - /bin/cp -R "myxen foundation"/.htaccess $DEPLOYPATH/ 2>/dev/null || echo ".htaccess deployed"
+    - /bin/cp -R "myxen foundation"/*.php $DEPLOYPATH/ 2>/dev/null || echo "PHP files deployed"
+    - /bin/cp -R "myxen foundation"/*.html $DEPLOYPATH/ 2>/dev/null || echo "HTML files deployed"
+    - /bin/cp -R "myxen foundation"/*.css $DEPLOYPATH/ 2>/dev/null || echo "CSS files deployed"
+    - /bin/cp -R "myxen foundation"/*.js $DEPLOYPATH/ 2>/dev/null || echo "JS files deployed"
+    - /bin/cp -R "myxen foundation"/*.json $DEPLOYPATH/ 2>/dev/null || echo "JSON files deployed"
+    - /bin/cp -R "myxen foundation"/*.txt $DEPLOYPATH/ 2>/dev/null || echo "TXT files deployed"
+    - /bin/cp -R "myxen foundation"/*.xml $DEPLOYPATH/ 2>/dev/null || echo "XML files deployed"
+    - /bin/cp -R "myxen foundation"/admin $DEPLOYPATH/ 2>/dev/null || echo "Admin directory deployed"
+    - /bin/cp -R "myxen foundation"/api $DEPLOYPATH/ 2>/dev/null || echo "API directory deployed"
+    - /bin/cp -R "myxen foundation"/assets $DEPLOYPATH/ 2>/dev/null || echo "Assets directory deployed"
+    - /bin/cp -R "myxen foundation"/core $DEPLOYPATH/ 2>/dev/null || echo "Core directory deployed"
+    - /bin/cp -R "myxen foundation"/data $DEPLOYPATH/ 2>/dev/null || echo "Data directory deployed"
+    - /bin/cp -R "myxen foundation"/includes $DEPLOYPATH/ 2>/dev/null || echo "Includes directory deployed"
+    - /bin/cp -R "myxen foundation"/modules $DEPLOYPATH/ 2>/dev/null || echo "Modules directory deployed"
+    - /bin/cp -R "myxen foundation"/vendor $DEPLOYPATH/ 2>/dev/null || echo "Vendor directory deployed"
+    - /bin/cp -R "myxen foundation"/.well-known $DEPLOYPATH/ 2>/dev/null || echo ".well-known directory deployed"
+    - if [ -f "myxen foundation/.env" ]; then /bin/cp "myxen foundation/.env" $DEPLOYPATH/.env && echo "Environment file deployed"; fi
     
     # Deploy Next.js dApp to subdirectory (e.g., /dapp)
     - echo "Deploying Next.js dApp..."
     - /bin/mkdir -p $DEPLOYPATH/dapp
-    - if command -v npm >/dev/null 2>&1; then \
+    - if command -v npm >/dev/null 2>&1 && [ -f "package.json" ]; then \
         echo "Node detected. Building root Next.js app..." && \
         npm ci && \
         npm run build && \
         /bin/cp -R out/* $DEPLOYPATH/dapp/ ; \
       else \
-        echo "npm not found on server. Skipping DApp build. Use GitHub Actions FTP workflow to deploy /dapp." ; \
+        echo "npm not found on server or package.json missing. Skipping DApp build. Use GitHub Actions FTP workflow to deploy /dapp." ; \
       fi
+    
+    # Install PHP Composer dependencies
+    - echo "Installing PHP dependencies..."
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader 2>/dev/null || echo "Composer not available or already installed"
     
     # Set correct permissions
     - chmod -R 755 $DEPLOYPATH
@@ -77,6 +78,8 @@ deployment:
     # Deploy Subdomains
     - echo "Deploying Subdomains..."
     - export SUBDOMAINSPATH=/home/studyproglobal.com.bd
+    
+    # Copy all subdomain directories
     - /bin/cp -R subdomains/admin $SUBDOMAINSPATH/admin 2>/dev/null || echo "Admin subdomain copied"
     - /bin/cp -R subdomains/work $SUBDOMAINSPATH/work 2>/dev/null || echo "Work subdomain copied"
     - /bin/cp -R subdomains/career $SUBDOMAINSPATH/career 2>/dev/null || echo "Career subdomain copied"
@@ -93,10 +96,16 @@ deployment:
     - /bin/cp -R subdomains/student $SUBDOMAINSPATH/student 2>/dev/null || echo "Student subdomain copied"
     - /bin/cp -R subdomains/merchant $SUBDOMAINSPATH/merchant 2>/dev/null || echo "Merchant subdomain copied"
     - /bin/cp -R subdomains/life $SUBDOMAINSPATH/life 2>/dev/null || echo "Life subdomain copied"
-    - chmod -R 755 $SUBDOMAINSPATH/admin $SUBDOMAINSPATH/work $SUBDOMAINSPATH/career $SUBDOMAINSPATH/claim $SUBDOMAINSPATH/blog $SUBDOMAINSPATH/wallet $SUBDOMAINSPATH/payments $SUBDOMAINSPATH/store $SUBDOMAINSPATH/meme $SUBDOMAINSPATH/locker $SUBDOMAINSPATH/university $SUBDOMAINSPATH/remit $SUBDOMAINSPATH/payroll $SUBDOMAINSPATH/student $SUBDOMAINSPATH/merchant $SUBDOMAINSPATH/life 2>/dev/null || echo "Permissions set for subdomains"
+    - /bin/cp -R subdomains/agent $SUBDOMAINSPATH/agent 2>/dev/null || echo "Agent subdomain copied"
+    - /bin/cp -R subdomains/api-gateway $SUBDOMAINSPATH/api-gateway 2>/dev/null || echo "API Gateway subdomain copied"
+    - /bin/cp -R subdomains/docker $SUBDOMAINSPATH/docker 2>/dev/null || echo "Docker subdomain copied"
+    
+    # Set permissions for all subdomains
+    - chmod -R 755 $SUBDOMAINSPATH/admin $SUBDOMAINSPATH/work $SUBDOMAINSPATH/career $SUBDOMAINSPATH/claim $SUBDOMAINSPATH/blog $SUBDOMAINSPATH/wallet $SUBDOMAINSPATH/payments $SUBDOMAINSPATH/store $SUBDOMAINSPATH/meme $SUBDOMAINSPATH/locker $SUBDOMAINSPATH/university $SUBDOMAINSPATH/remit $SUBDOMAINSPATH/payroll $SUBDOMAINSPATH/student $SUBDOMAINSPATH/merchant $SUBDOMAINSPATH/life $SUBDOMAINSPATH/agent $SUBDOMAINSPATH/api-gateway $SUBDOMAINSPATH/docker 2>/dev/null || echo "Permissions set for subdomains"
     - echo "✅ Subdomains deployed successfully!"
     
     - echo "✅ Deployment completed successfully!"
-    - echo "Frontend: /home/studyproglobal.com.bd/"
-    - echo "Backend: /home/studyproglobal.com.bd/studypro-backend/"
-    - echo "Subdomains: admin, work, career, claim, blog, wallet, payments, store, meme, locker, university, remit, payroll, student, merchant, life"
+    - echo "Main Site: /home/studyproglobal.com.bd/ (public_html)"
+    - echo "Backend API: /home/studyproglobal.com.bd/studypro-backend/"
+    - echo "Next.js DApp: /home/studyproglobal.com.bd/dapp/"
+    - echo "Subdomains: admin, work, career, claim, blog, wallet, payments, store, meme, locker, university, remit, payroll, student, merchant, life, agent, api-gateway, docker"

@@ -103,7 +103,7 @@ deployment:
     - /bin/cp -R subdomains/docker/* $SUBDOMAINSPATH/docker.myxenpay.finance/ 2>/dev/null || echo "Docker subdomain copied (if exists)"
     
     # Set permissions for all subdomains
-    - chmod -R 755 $SUBDOMAINSPATH/admin.myxenpay.finance $SUBDOMAINSPATH/work.myxenpay.finance $SUBDOMAINSPATH/career.myxenpay.finance $SUBDOMAINSPATH/claim.myxenpay.finance $SUBDOMAINSPATH/blog.myxenpay.finance $SUBDOMAINSPATH/wallets.myxenpay.finance $SUBDOMAINSPATH/payments.myxenpay.finance $SUBDOMAINSPATH/store.myxenpay.finance $SUBDOMAINSPATH/meme.myxenpay.finance $SUBDOMAINSPATH/locker.myxenpay.finance $SUBDOMAINSPATH/university.myxenpay.finance $SUBDOMAINSPATH/remit.myxenpay.finance $SUBDOMAINSPATH/payroll.myxenpay.finance $SUBDOMAINSPATH/students.myxenpay.finance $SUBDOMAINSPATH/life.myxenpay.finance $SUBDOMAINSPATH/agent.myxenpay.finance $SUBDOMAINSPATH/api.myxenpay.finance 2>/dev/null || echo "Permissions set for subdomains"
+    - find $SUBDOMAINSPATH -maxdepth 1 -type d \( -name "*.myxenpay.finance" \) -exec chmod -R 755 {} \; 2>/dev/null || echo "Permissions set for subdomains"
     - echo "✅ Subdomains deployed successfully!"
     
     - echo "✅ Deployment completed successfully!"

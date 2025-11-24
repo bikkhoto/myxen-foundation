@@ -1,0 +1,5 @@
+[06-Nov-2025 08:31:12 UTC] PHP Warning:  require_once(includes/db.php): Failed to open stream: No such file or directory in /home/myxenpay/public_html/includes/qr.php on line 2
+[06-Nov-2025 08:31:12 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'includes/db.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/myxenpay/public_html/includes/qr.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/myxenpay/public_html/includes/qr.php on line 2

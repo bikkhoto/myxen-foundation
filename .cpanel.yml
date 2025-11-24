@@ -4,9 +4,9 @@
 
 deployment:
   tasks:
-    # Set deployment path to studyproglobal.com.bd directory
-    - export DEPLOYPATH=/home/studyproglobal.com.bd
-    - export BACKENDPATH=/home/studyproglobal.com.bd/studypro-backend
+    # Set deployment path to public_html directory (adjust username if needed)
+    - export DEPLOYPATH=/home/studyproglobal.com.bd/public_html
+    - export BACKENDPATH=/home/studyproglobal.com.bd/public_html/studypro-backend
     - export NODE_ENV=production
     
     # Clean up previous deployment (optional - uncomment if needed)
@@ -77,35 +77,56 @@ deployment:
     
     # Deploy Subdomains
     - echo "Deploying Subdomains..."
+    # Note: Subdomain paths need to be configured in cPanel first
+    # Typical cPanel subdomain structure is /home/username/subdomain-name
     - export SUBDOMAINSPATH=/home/studyproglobal.com.bd
     
-    # Copy all subdomain directories
-    - /bin/cp -R subdomains/admin $SUBDOMAINSPATH/admin 2>/dev/null || echo "Admin subdomain copied"
-    - /bin/cp -R subdomains/work $SUBDOMAINSPATH/work 2>/dev/null || echo "Work subdomain copied"
-    - /bin/cp -R subdomains/career $SUBDOMAINSPATH/career 2>/dev/null || echo "Career subdomain copied"
-    - /bin/cp -R subdomains/claim $SUBDOMAINSPATH/claim 2>/dev/null || echo "Claim subdomain copied"
-    - /bin/cp -R subdomains/blog $SUBDOMAINSPATH/blog 2>/dev/null || echo "Blog subdomain copied"
-    - /bin/cp -R subdomains/wallet $SUBDOMAINSPATH/wallet 2>/dev/null || echo "Wallet subdomain copied"
-    - /bin/cp -R subdomains/payments $SUBDOMAINSPATH/payments 2>/dev/null || echo "Payments subdomain copied"
-    - /bin/cp -R subdomains/store $SUBDOMAINSPATH/store 2>/dev/null || echo "Store subdomain copied"
-    - /bin/cp -R subdomains/meme $SUBDOMAINSPATH/meme 2>/dev/null || echo "Meme subdomain copied"
-    - /bin/cp -R subdomains/locker $SUBDOMAINSPATH/locker 2>/dev/null || echo "Locker subdomain copied"
-    - /bin/cp -R subdomains/university $SUBDOMAINSPATH/university 2>/dev/null || echo "University subdomain copied"
-    - /bin/cp -R subdomains/remit $SUBDOMAINSPATH/remit 2>/dev/null || echo "Remit subdomain copied"
-    - /bin/cp -R subdomains/payroll $SUBDOMAINSPATH/payroll 2>/dev/null || echo "Payroll subdomain copied"
-    - /bin/cp -R subdomains/student $SUBDOMAINSPATH/student 2>/dev/null || echo "Student subdomain copied"
-    - /bin/cp -R subdomains/merchant $SUBDOMAINSPATH/merchant 2>/dev/null || echo "Merchant subdomain copied"
-    - /bin/cp -R subdomains/life $SUBDOMAINSPATH/life 2>/dev/null || echo "Life subdomain copied"
-    - /bin/cp -R subdomains/agent $SUBDOMAINSPATH/agent 2>/dev/null || echo "Agent subdomain copied"
-    - /bin/cp -R subdomains/api-gateway $SUBDOMAINSPATH/api-gateway 2>/dev/null || echo "API Gateway subdomain copied"
-    - /bin/cp -R subdomains/docker $SUBDOMAINSPATH/docker 2>/dev/null || echo "Docker subdomain copied"
+    # Copy all subdomain directories (ensure subdomains are created in cPanel first)
+    - /bin/mkdir -p $SUBDOMAINSPATH/admin 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/work 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/career 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/claim 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/blog 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/wallet 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/payments 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/store 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/meme 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/locker 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/university 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/remit 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/payroll 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/student 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/merchant 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/life 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/agent 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/api-gateway 2>/dev/null || true
+    - /bin/mkdir -p $SUBDOMAINSPATH/docker 2>/dev/null || true
+    - /bin/cp -R subdomains/admin/* $SUBDOMAINSPATH/admin/ 2>/dev/null || echo "Admin subdomain copied"
+    - /bin/cp -R subdomains/work/* $SUBDOMAINSPATH/work/ 2>/dev/null || echo "Work subdomain copied"
+    - /bin/cp -R subdomains/career/* $SUBDOMAINSPATH/career/ 2>/dev/null || echo "Career subdomain copied"
+    - /bin/cp -R subdomains/claim/* $SUBDOMAINSPATH/claim/ 2>/dev/null || echo "Claim subdomain copied"
+    - /bin/cp -R subdomains/blog/* $SUBDOMAINSPATH/blog/ 2>/dev/null || echo "Blog subdomain copied"
+    - /bin/cp -R subdomains/wallet/* $SUBDOMAINSPATH/wallet/ 2>/dev/null || echo "Wallet subdomain copied"
+    - /bin/cp -R subdomains/payments/* $SUBDOMAINSPATH/payments/ 2>/dev/null || echo "Payments subdomain copied"
+    - /bin/cp -R subdomains/store/* $SUBDOMAINSPATH/store/ 2>/dev/null || echo "Store subdomain copied"
+    - /bin/cp -R subdomains/meme/* $SUBDOMAINSPATH/meme/ 2>/dev/null || echo "Meme subdomain copied"
+    - /bin/cp -R subdomains/locker/* $SUBDOMAINSPATH/locker/ 2>/dev/null || echo "Locker subdomain copied"
+    - /bin/cp -R subdomains/university/* $SUBDOMAINSPATH/university/ 2>/dev/null || echo "University subdomain copied"
+    - /bin/cp -R subdomains/remit/* $SUBDOMAINSPATH/remit/ 2>/dev/null || echo "Remit subdomain copied"
+    - /bin/cp -R subdomains/payroll/* $SUBDOMAINSPATH/payroll/ 2>/dev/null || echo "Payroll subdomain copied"
+    - /bin/cp -R subdomains/student/* $SUBDOMAINSPATH/student/ 2>/dev/null || echo "Student subdomain copied"
+    - /bin/cp -R subdomains/merchant/* $SUBDOMAINSPATH/merchant/ 2>/dev/null || echo "Merchant subdomain copied"
+    - /bin/cp -R subdomains/life/* $SUBDOMAINSPATH/life/ 2>/dev/null || echo "Life subdomain copied"
+    - /bin/cp -R subdomains/agent/* $SUBDOMAINSPATH/agent/ 2>/dev/null || echo "Agent subdomain copied"
+    - /bin/cp -R subdomains/api-gateway/* $SUBDOMAINSPATH/api-gateway/ 2>/dev/null || echo "API Gateway subdomain copied"
+    - /bin/cp -R subdomains/docker/* $SUBDOMAINSPATH/docker/ 2>/dev/null || echo "Docker subdomain copied"
     
     # Set permissions for all subdomains
     - chmod -R 755 $SUBDOMAINSPATH/admin $SUBDOMAINSPATH/work $SUBDOMAINSPATH/career $SUBDOMAINSPATH/claim $SUBDOMAINSPATH/blog $SUBDOMAINSPATH/wallet $SUBDOMAINSPATH/payments $SUBDOMAINSPATH/store $SUBDOMAINSPATH/meme $SUBDOMAINSPATH/locker $SUBDOMAINSPATH/university $SUBDOMAINSPATH/remit $SUBDOMAINSPATH/payroll $SUBDOMAINSPATH/student $SUBDOMAINSPATH/merchant $SUBDOMAINSPATH/life $SUBDOMAINSPATH/agent $SUBDOMAINSPATH/api-gateway $SUBDOMAINSPATH/docker 2>/dev/null || echo "Permissions set for subdomains"
     - echo "✅ Subdomains deployed successfully!"
     
     - echo "✅ Deployment completed successfully!"
-    - echo "Main Site: /home/studyproglobal.com.bd/ (public_html)"
-    - echo "Backend API: /home/studyproglobal.com.bd/studypro-backend/"
-    - echo "Next.js DApp: /home/studyproglobal.com.bd/dapp/"
+    - echo "Main Site: /home/studyproglobal.com.bd/public_html/"
+    - echo "Backend API: /home/studyproglobal.com.bd/public_html/studypro-backend/"
+    - echo "Next.js DApp: /home/studyproglobal.com.bd/public_html/dapp/"
     - echo "Subdomains: admin, work, career, claim, blog, wallet, payments, store, meme, locker, university, remit, payroll, student, merchant, life, agent, api-gateway, docker"

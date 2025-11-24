@@ -39,7 +39,7 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          eval "")(ssh-agent -s)"
+          eval "$(ssh-agent -s)"
           if [ -n "${SSH_PASSPHRASE:-}" ]; then
             printf '%s\n' '#!/usr/bin/env bash' 'echo "$SSH_PASSPHRASE"' > ~/.ssh/askpass.sh
             chmod +x ~/.ssh/askpass.sh

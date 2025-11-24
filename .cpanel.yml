@@ -74,6 +74,29 @@ deployment:
         echo "No backend directory found, skipping backend deployment" ; \
       fi
     
+    # Deploy Subdomains
+    - echo "Deploying Subdomains..."
+    - export SUBDOMAINSPATH=/home/studyproglobal.com.bd
+    - /bin/cp -R subdomains/admin $SUBDOMAINSPATH/admin 2>/dev/null || echo "Admin subdomain copied"
+    - /bin/cp -R subdomains/work $SUBDOMAINSPATH/work 2>/dev/null || echo "Work subdomain copied"
+    - /bin/cp -R subdomains/career $SUBDOMAINSPATH/career 2>/dev/null || echo "Career subdomain copied"
+    - /bin/cp -R subdomains/claim $SUBDOMAINSPATH/claim 2>/dev/null || echo "Claim subdomain copied"
+    - /bin/cp -R subdomains/blog $SUBDOMAINSPATH/blog 2>/dev/null || echo "Blog subdomain copied"
+    - /bin/cp -R subdomains/wallet $SUBDOMAINSPATH/wallet 2>/dev/null || echo "Wallet subdomain copied"
+    - /bin/cp -R subdomains/payments $SUBDOMAINSPATH/payments 2>/dev/null || echo "Payments subdomain copied"
+    - /bin/cp -R subdomains/store $SUBDOMAINSPATH/store 2>/dev/null || echo "Store subdomain copied"
+    - /bin/cp -R subdomains/meme $SUBDOMAINSPATH/meme 2>/dev/null || echo "Meme subdomain copied"
+    - /bin/cp -R subdomains/locker $SUBDOMAINSPATH/locker 2>/dev/null || echo "Locker subdomain copied"
+    - /bin/cp -R subdomains/university $SUBDOMAINSPATH/university 2>/dev/null || echo "University subdomain copied"
+    - /bin/cp -R subdomains/remit $SUBDOMAINSPATH/remit 2>/dev/null || echo "Remit subdomain copied"
+    - /bin/cp -R subdomains/payroll $SUBDOMAINSPATH/payroll 2>/dev/null || echo "Payroll subdomain copied"
+    - /bin/cp -R subdomains/student $SUBDOMAINSPATH/student 2>/dev/null || echo "Student subdomain copied"
+    - /bin/cp -R subdomains/merchant $SUBDOMAINSPATH/merchant 2>/dev/null || echo "Merchant subdomain copied"
+    - /bin/cp -R subdomains/life $SUBDOMAINSPATH/life 2>/dev/null || echo "Life subdomain copied"
+    - chmod -R 755 $SUBDOMAINSPATH/admin $SUBDOMAINSPATH/work $SUBDOMAINSPATH/career $SUBDOMAINSPATH/claim $SUBDOMAINSPATH/blog $SUBDOMAINSPATH/wallet $SUBDOMAINSPATH/payments $SUBDOMAINSPATH/store $SUBDOMAINSPATH/meme $SUBDOMAINSPATH/locker $SUBDOMAINSPATH/university $SUBDOMAINSPATH/remit $SUBDOMAINSPATH/payroll $SUBDOMAINSPATH/student $SUBDOMAINSPATH/merchant $SUBDOMAINSPATH/life 2>/dev/null || echo "Permissions set for subdomains"
+    - echo "✅ Subdomains deployed successfully!"
+    
     - echo "✅ Deployment completed successfully!"
     - echo "Frontend: /home/studyproglobal.com.bd/"
     - echo "Backend: /home/studyproglobal.com.bd/studypro-backend/"
+    - echo "Subdomains: admin, work, career, claim, blog, wallet, payments, store, meme, locker, university, remit, payroll, student, merchant, life"

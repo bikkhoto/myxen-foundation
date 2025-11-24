@@ -13,15 +13,26 @@ Production PHP application powering https://myxenpay.finance
 - Payment processing with QR codes
 - User authentication & sessions
 - MySQL database integration
-- Streaming payroll system
-- Merchant & student portals
-- Virtual card services
+- Main landing pages and documentation
 
-### 2. **myxenpay-dapp/** - Next.js DApp Frontend
+### 2. **subdomains/** - Subdomain Applications
+Organized microservices architecture with 16+ subdomains:
+- **admin** - Admin panel and management
+- **work** - Freelancer platform
+- **career** - Job portal
+- **claim** - Token claim interface
+- **blog** - Content management
+- **wallet** - Virtual card services
+- **payments** - Payment gateway
+- **store** - Merchant storefront
+- **payroll** - Streaming payroll
+- **student** - Student rewards
+- And more... (see `subdomains/README.md`)
+
+### 3. **myxenpay-dapp/** - Next.js DApp Frontend
 Modern decentralized application interface
 - Token presale interface
 - Wallet connection (Phantom, Solflare)
-- Claim portal with KYC
 - Blockchain transaction display
 - Responsive design with Tailwind CSS
 
@@ -64,11 +75,20 @@ git push origin main
 ```
 
 The `.cpanel.yml` file automatically:
-1. Deploys PHP files to `public_html/`
-2. Installs Composer dependencies
-3. Builds Next.js dApp
-4. Deploys dApp to `public_html/dapp/`
-5. Sets correct permissions
+1. Deploys main PHP website to root
+2. Deploys all subdomains to their directories
+3. Installs Composer dependencies
+4. Builds Next.js dApp
+5. Deploys dApp to `/dapp/`
+6. Sets correct permissions
+
+### Subdomain Configuration
+
+See `CPANEL_SUBDOMAIN_SETUP.md` for detailed instructions on:
+- Creating subdomains in cPanel
+- Configuring SSL certificates
+- DNS setup
+- Troubleshooting subdomain issues
 
 ### GitHub Secrets Required
 
@@ -84,31 +104,39 @@ See `myxenpay-dapp/docs/CPANEL_DEPLOYMENT.md` for manual deployment instructions
 ## 🔗 Architecture
 
 ```
-┌──────────────────────────────────────────────┐
-│         myxenpay.finance (cPanel)            │
-├──────────────────────────────────────────────┤
-│                                              │
-│  PHP Backend (/)                             │
-│  ├── Authentication                          │
-│  ├── Database Operations                     │
-│  ├── Payment Processing                      │
-│  └── API Endpoints                           │
-│                                              │
-│  Next.js dApp (/dapp)                        │
-│  ├── Modern UI                               │
-│  ├── Wallet Connect                          │
-│  ├── Blockchain Interaction                  │
-│  └── Token Operations                        │
-│                                              │
-└──────────┬───────────────────────────────────┘
-           │
-           ▼
-    ┌──────────────┐
-    │   Solana     │
-    │  Blockchain  │
-    │  (mainnet)   │
-    └──────────────┘
+┌────────────────────────────────────────────────────────┐
+│           myxenpay.finance (Main Domain)               │
+│                     index.php                          │
+└───────────────────────┬────────────────────────────────┘
+                        │
+        ┌───────────────┴────────────────┐
+        │                                │
+┌───────▼─────────────┐     ┌───────────▼──────────────┐
+│    Subdomains       │     │     Next.js DApp         │
+│                     │     │      (/dapp)             │
+│ • admin             │     │                          │
+│ • work              │     │  • Token Presale         │
+│ • career            │     │  • Wallet Connect        │
+│ • claim             │     │  • Blockchain TX         │
+│ • blog              │     └──────────┬───────────────┘
+│ • wallet            │                │
+│ • payments          │                │
+│ • store             │                │
+│ • payroll           │                │
+│ • student           │                │
+│ • merchant          │                │
+│ • meme              │                │
+│ • locker            │                │
+│ • [10+ more...]     │                │
+└─────────────────────┘                │
+                                       │
+                            ┌──────────▼──────────┐
+                            │   Solana Blockchain  │
+                            │     (mainnet)        │
+                            └─────────────────────┘
 ```
+
+See `myxen core.png` for the complete ecosystem architecture diagram.
 
 ## 🛠️ Technology Stack
 
@@ -150,6 +178,9 @@ Comprehensive documentation in `myxenpay-dapp/docs/`:
 ## 📝 Key Configuration Files
 
 - `.cpanel.yml` - Automatic deployment config
+- `CPANEL_SUBDOMAIN_SETUP.md` - Subdomain configuration guide
+- `CLEANUP_GUIDE.md` - Optional file cleanup after subdomain deployment
+- `subdomains/README.md` - Subdomain architecture documentation
 - `myxenpay-dapp/myxen.config.json` - Frontend settings
 - `myxen foundation/.env` - PHP environment (not in repo)
 - `myxen foundation/config.php` - App configuration

@@ -44,14 +44,15 @@ If you need to manually deploy a subdomain:
 
 ```bash
 # SSH into cPanel
-cd /home/studyproglobal.com.bd
+ssh myxenpay@server10.cloudswebserver.com
+cd /home/myxenpay
 
 # Copy subdomain files
-cp -R /path/to/repo/subdomains/admin ./admin
+cp -R /path/to/repo/subdomains/admin ./admin.myxenpay.finance
 
 # Set permissions
-chmod -R 755 admin
-find admin -type f -exec chmod 644 {} \;
+chmod -R 755 admin.myxenpay.finance
+find admin.myxenpay.finance -type f -exec chmod 644 {} \;
 ```
 
 ## cPanel Subdomain Configuration
@@ -60,8 +61,13 @@ In cPanel, ensure each subdomain is configured to point to its directory:
 
 1. Go to cPanel → Domains → Subdomains
 2. Create subdomain (e.g., `admin`)
-3. Set Document Root to `/home/studyproglobal.com.bd/admin`
+3. Set Document Root to `/home/myxenpay/admin.myxenpay.finance`
 4. Save configuration
+
+**Server Details:**
+- Server: server10.cloudswebserver.com
+- Username: myxenpay
+- Database: myxenpay__myxn (User: myxenpay_admin)
 
 ## Shared Resources
 

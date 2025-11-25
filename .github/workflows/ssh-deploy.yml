@@ -1,5 +1,8 @@
 name: Deploy via SSH (rsync)
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
